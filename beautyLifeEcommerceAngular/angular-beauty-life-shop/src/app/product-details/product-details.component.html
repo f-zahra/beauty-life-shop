@@ -1,0 +1,42 @@
+<!-- product details -->
+<div class="product-details-container">
+  <div class="detail">
+    <div class="image d-flex flex-column gap">
+      <img [src]="productData.url" alt="" />
+      <div class="other-images d-flex align-items-center">
+        <div class="">
+          <img *ngIf="productData" [src]="productData.url" alt="" />
+        </div>
+        <div class="">
+          <img *ngIf="productData" [src]="productData.url" alt="" />
+        </div>
+        <div class="">
+          <img *ngIf="productData" [src]="productData.url" alt="" />
+        </div>
+        <div class="">
+          <img *ngIf="productData" [src]="productData.url" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <h6 class="name" *ngIf="productData">{{ productData.name }}</h6>
+      <div class="rating">
+        <p-rating
+          *ngIf="productData"
+          [(ngModel)]="productData.rating"
+          [readonly]="true"
+          [cancel]="false"
+        ></p-rating>
+        <span class="ratingNumber">{{ productData.rating }}</span>
+      </div>
+      <div class="price" *ngIf="productData">{{ productData.price }}$</div>
+      <div class="buttons">
+        <button>Add to Cart</button>
+      </div>
+      <div class="description" *ngIf="productData">
+        {{ productData.description }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<p>test works!</p>
+<div>
+  <p-rating [(ngModel)]="value" [readonly]="true" [cancel]="false"></p-rating>
+  <input
+    type="number"
+    id="points"
+    name="points"
+    step="3"
+    [(ngModel)]="quantity"
+  />
+
+  <p>
+    Total :<span>{{ quantity }}</span>
+  </p>
+</div>

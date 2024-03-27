@@ -1,0 +1,11 @@
+<h2 class="title">Shop All</h2>
+<div class="product-collection container-fluid">
+  <div class="row gap">
+    <div class="product-container p-2" *ngFor="let product of productList">
+      <app-product
+        [product]="product"
+        (ProductOutput)="onProductOutput($event)"
+      ></app-product>
+    </div>
+  </div>
+</div>
