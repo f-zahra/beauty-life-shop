@@ -1,0 +1,71 @@
+/* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+:root {
+  --lg-font: "Kaisei Tokumin", serif;
+  --sm-font: "Poppins", sans-serif;
+  --pink: #e5345b;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* button */
+.bg-primary {
+  background-color: var(--pink) !important;
+}
+
+.btn:not(.nav-btns button) {
+  background-color: #fff;
+  color: rgb(85, 85, 85);
+  padding: 10px 28px;
+
+  border: 1px solid rgb(85, 85, 85);
+}
+.btn:not(.nav-btns button):hover {
+  background-color: var(--pink);
+  color: #fff;
+  border-color: var(--pink);
+}
+
+/* text color */
+.text-primary {
+  color: var(--pink) !important;
+}
+
+html,
+body,
+app-root {
+  height: 100%;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 775px) {
+  .detail {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .detail .img img {
+    width: unset;
+    text-align: center;
+  }
+  .detail .name {
+    font-size: medium;
+    margin: 0;
+  }
+  .detail .buttons button {
+    font-size: small;
+  }
+
+  .detail .buttons {
+    justify-content: center;
+  }
+}

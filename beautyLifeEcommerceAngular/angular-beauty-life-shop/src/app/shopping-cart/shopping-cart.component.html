@@ -1,0 +1,66 @@
+<div class="shopping-cart-container">
+  <div class="shopping-cart">
+    <div class="header">
+      <h2>Your Cart</h2>
+    </div>
+    <div class="shopping-cart-table">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">continue shopping</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td class="cart-info">
+              <div class="cart-info-details d-flex">
+                <img [src]="item.product.url" alt="" />
+                <div class="item-details d-flex flex-column align-items-start">
+                  <p>
+                    <strong>{{ item.product.name }}</strong>
+                  </p>
+                  <p>
+                    <small>{{ item.product.description }}</small>
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td>{{ item.product.price }}$</td>
+            <td>
+              <div class="input-group quantity-selector d-flex flex-row">
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  min="1"
+                  max="5"
+                  class="me-2 p-1"
+                  [value]="item.quantity"
+                />
+                <button type="button" class="trash-btn">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </td>
+            <td>{{ item.quantity * item.product.price }}$</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="subtotal">
+      <h1 class="lead">
+        <strong>Subtotal {{ getSubtotal() }}$CAD</strong>
+      </h1>
+
+      <p class="lead">Taxes and shipping calculated at checkout</p>
+    </div>
+    <div class="checkout-button">
+      <button class="popup-button">
+        <i class="me-2 fas fa-lock"></i>checkout
+      </button>
+    </div>
+  </div>
+</div>
