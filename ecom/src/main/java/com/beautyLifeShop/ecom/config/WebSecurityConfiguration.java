@@ -1,6 +1,7 @@
 package com.beautyLifeShop.ecom.config;
 
 
+import com.beautyLifeShop.ecom.models.AuthenticationSuccessHandler;
 import com.beautyLifeShop.ecom.repository.UserRepository;
 import com.beautyLifeShop.ecom.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,8 @@ public class WebSecurityConfiguration {
 
         }).csrf().disable()
 
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
+                        .successHandler(new AuthenticationSuccessHandler()))
         .build();
     }
 

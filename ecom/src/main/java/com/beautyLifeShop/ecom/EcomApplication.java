@@ -14,7 +14,7 @@ public class EcomApplication {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedPassword = passwordEncoder.encode(passwordToEncode);
 
-		System.out.println("Encoded password: " + encodedPassword);
+
 	}
 
 }
