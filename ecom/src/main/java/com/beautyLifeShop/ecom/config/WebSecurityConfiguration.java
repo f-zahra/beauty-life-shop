@@ -33,18 +33,12 @@ public class WebSecurityConfiguration {
     //customize the filter
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return  httpSecurity.authorizeHttpRequests( registry ->
-                //home accessed by everyone
-        { registry.requestMatchers("/home","api/register/**").permitAll();
-            registry.requestMatchers("api/admin/**").hasRole("ADMIN");
-            registry.requestMatchers("api/user/**").hasAnyRole("USER","ADMIN");
-            registry.anyRequest().authenticated();
 
-        }).csrf().disable()
-
-                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
-                        .successHandler(new AuthenticationSuccessHandler()))
-        .build();
+        httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
+        httpSecurity.formLogin();
+        httpSecurity.httpBasic();
+        httpSecurity.csrf().disable();
+        return httpSecurity.build();
     }
 
     

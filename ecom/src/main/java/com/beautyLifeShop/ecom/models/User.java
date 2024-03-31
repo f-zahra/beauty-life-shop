@@ -1,6 +1,8 @@
 package com.beautyLifeShop.ecom.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -30,20 +32,29 @@ public class User implements UserDetails {
     private String firstname;
     private String lastname;
     private String email;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Address> addresses;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private ShoppingCart shoppingCart;
     @Enumerated(EnumType.STRING)
     private UserRole role;
     private  boolean locked;
     private boolean enabled = false;
-    public User(String username, String password, String firstname, String lastname, String email, UserRole role, boolean locked) {
+
+
+    public User(Long id, String username, String password, String firstname, String lastname, String email, List<Address> addresses, UserRole role, boolean locked) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+        this.addresses = addresses;
         this.role = role;
         this.locked = locked;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

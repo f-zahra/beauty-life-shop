@@ -2,14 +2,13 @@ package com.beautyLifeShop.ecom.service;
 
 import com.beautyLifeShop.ecom.models.User;
 import com.beautyLifeShop.ecom.repository.UserRepository;
-import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,9 +19,19 @@ public class UserService implements  UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+
     public User registerNewUser(User user) {
         return userRepository.save(user);
     }
+
+    public Optional<User> getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Long id = userRepository.findByEmail(email).get().getId();
+
+        return userRepository.getUser(id);
+    }
+
 
 
     @Override
@@ -34,8 +43,9 @@ public class UserService implements  UserDetailsService {
             UserDetails userDetails = org.springframework.security.core.userdetails.User.builder().username(userObj.getEmail())
                     .password(userObj.getPassword())
                     .roles(String.valueOf(userObj.getRole())).build();
-            System.out.println(userDetails);
+
             //build user auth details
+
             return userDetails;
         }
         return null;
