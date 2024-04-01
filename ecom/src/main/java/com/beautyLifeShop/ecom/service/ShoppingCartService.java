@@ -23,20 +23,7 @@ public class ShoppingCartService {
     private UserService userService;
 
 
-   /* public Optional<ShoppingCart> getShoppingCart() throws CartNotFound {
 
-
-            Long userId = userService.getUser().get().getId();
-        Optional<ShoppingCart> cart =  shoppingCartRepository.findByUserId(userId);
-        if(!cart.isPresent()) {
-            throw new CartNotFound("cart not found");
-        } else return cart;
-
-
-
-
-    }
-*/
 
 
 
@@ -53,6 +40,7 @@ public class ShoppingCartService {
 
         // Add the cart item to the shopping cart
         shoppingCart.getCartItems().add(cartItem);
+        shoppingCart.setEmpty(false);
 
         // Update the shopping cart in the database
         shoppingCartRepository.save(shoppingCart);
@@ -69,6 +57,7 @@ public class ShoppingCartService {
             ShoppingCart newCart = new ShoppingCart();
             newCart.setUser(user);
             shoppingCartRepository.save(newCart);
+
 
             return Optional.of(newCart);
 
