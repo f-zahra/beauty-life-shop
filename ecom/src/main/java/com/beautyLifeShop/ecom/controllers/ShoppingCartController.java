@@ -32,14 +32,14 @@ public class ShoppingCartController {
 
 
     @GetMapping("api/cart")
-    public ResponseEntity<ShoppingCart> getShoppingCart() throws CartNotFound {
+    public ResponseEntity<?> getShoppingCart() throws CartNotFound {
 
         Optional<ShoppingCart> shoppingCart =  shoppingCartService.getCurrentUserShoppingCart();
-        
-        return  ResponseEntity.ok(shoppingCart.get());
+        if(shoppingCart.get().isEmpty()) return  ResponseEntity.ok("Cart is Empty");
+        else return  ResponseEntity.ok(shoppingCart.get());
     }
 
-    //add item to shopping cart
+
 
 
 }
