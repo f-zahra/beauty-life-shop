@@ -3,11 +3,13 @@ package com.beautyLifeShop.ecom.service;
 import com.beautyLifeShop.ecom.models.CartItem;
 import com.beautyLifeShop.ecom.models.Product;
 import com.beautyLifeShop.ecom.models.ShoppingCart;
+import com.beautyLifeShop.ecom.models.User;
 import com.beautyLifeShop.ecom.repository.ProductRepository;
 import com.beautyLifeShop.ecom.repository.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -21,11 +23,20 @@ public class ShoppingCartService {
     private UserService userService;
 
 
-    public Optional<ShoppingCart> getShoppingCart(){
-        Long userId = userService.getUser().get().getId();
-       return  shoppingCartRepository.findByUserId(userId);
-    }
+   /* public Optional<ShoppingCart> getShoppingCart() throws CartNotFound {
 
+
+            Long userId = userService.getUser().get().getId();
+        Optional<ShoppingCart> cart =  shoppingCartRepository.findByUserId(userId);
+        if(!cart.isPresent()) {
+            throw new CartNotFound("cart not found");
+        } else return cart;
+
+
+
+
+    }
+*/
 
 
 
@@ -49,8 +60,20 @@ public class ShoppingCartService {
 
     public Optional<ShoppingCart> getCurrentUserShoppingCart() {
 
-        Long userId = userService.getUser().get().getId();
-        return shoppingCartRepository.findByUserId(userId);
+        //get user id
+        User user = userService.getUser().get();
+        //find shopping cart
+        Optional<ShoppingCart> cart = shoppingCartRepository.findByUserId(user.getId());
+        if(!cart.isPresent()) {
+            //instan cart
+            ShoppingCart newCart = new ShoppingCart();
+            newCart.setUser(user);
+            shoppingCartRepository.save(newCart);
+
+            return Optional.of(newCart);
+
+        }else return cart;
+
     }
 
 }

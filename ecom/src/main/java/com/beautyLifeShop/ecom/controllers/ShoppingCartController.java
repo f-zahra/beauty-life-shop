@@ -3,6 +3,7 @@ package com.beautyLifeShop.ecom.controllers;
 import com.beautyLifeShop.ecom.models.CartItem;
 import com.beautyLifeShop.ecom.models.Product;
 import com.beautyLifeShop.ecom.models.ShoppingCart;
+import com.beautyLifeShop.ecom.service.CartNotFound;
 import com.beautyLifeShop.ecom.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,10 @@ public class ShoppingCartController {
 
 
     @GetMapping("api/cart")
-    public ResponseEntity<ShoppingCart> getShoppingCart(){
+    public ResponseEntity<ShoppingCart> getShoppingCart() throws CartNotFound {
 
-        Optional<ShoppingCart> shoppingCart = shoppingCartService.getShoppingCart();
+        Optional<ShoppingCart> shoppingCart =  shoppingCartService.getCurrentUserShoppingCart();
+        
         return  ResponseEntity.ok(shoppingCart.get());
     }
 

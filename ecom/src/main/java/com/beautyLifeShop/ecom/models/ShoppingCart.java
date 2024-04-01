@@ -21,7 +21,7 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean isEmpty;
+    private boolean isEmpty = true;
     private int quantity;
     private double Total;
     @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.MERGE)
