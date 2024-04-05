@@ -97,6 +97,7 @@ public class ShoppingCartService {
         userCart.getCartItems().clear();
         userCart.setTotal(0);
         userCart.setQuantity(0);
+        userCart.setEmpty(true);
     }
 
 
