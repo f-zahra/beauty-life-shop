@@ -1,6 +1,7 @@
 package com.beautyLifeShop.ecom.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -31,4 +32,6 @@ public class ShoppingCart {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @JsonManagedReference
     private User user;
+
+
 }

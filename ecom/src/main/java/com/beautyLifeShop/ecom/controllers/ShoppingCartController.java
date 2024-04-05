@@ -1,12 +1,9 @@
 package com.beautyLifeShop.ecom.controllers;
 
-import com.beautyLifeShop.ecom.models.CartItem;
-import com.beautyLifeShop.ecom.models.Product;
 import com.beautyLifeShop.ecom.models.ShoppingCart;
-import com.beautyLifeShop.ecom.service.CartNotFound;
 import com.beautyLifeShop.ecom.service.ShoppingCartService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +31,7 @@ public class ShoppingCartController {
 
 
     @GetMapping("api/cart")
-    public ResponseEntity<Object> getShoppingCart() throws CartNotFound {
+    public ResponseEntity<Object> getShoppingCart() {
 
         Optional<ShoppingCart> shoppingCart =  shoppingCartService.getCurrentUserShoppingCart();
         if(shoppingCart.get().isEmpty()) {return  ResponseEntity.status(HttpStatus.OK).body("cart is empty");}

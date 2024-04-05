@@ -22,7 +22,7 @@ public class Address {
     private String postalCode;
     private String country;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;

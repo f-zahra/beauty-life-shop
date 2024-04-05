@@ -6,6 +6,7 @@ import com.beautyLifeShop.ecom.models.ShoppingCart;
 import com.beautyLifeShop.ecom.models.User;
 import com.beautyLifeShop.ecom.repository.ProductRepository;
 import com.beautyLifeShop.ecom.repository.ShoppingCartRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +22,6 @@ public class ShoppingCartService {
     private ProductRepository productRepository;
     @Autowired
     private UserService userService;
-
-
-
-
-
 
 
     public void addItemToCart(ShoppingCart shoppingCart, Long productId) {
@@ -46,7 +42,7 @@ public class ShoppingCartService {
         shoppingCartRepository.save(shoppingCart);
     }
 
-    public Optional<ShoppingCart> getCurrentUserShoppingCart() {
+    public Optional<ShoppingCart> getCurrentUserShoppingCart() throws EntityNotFoundException {
 
         //get user id
         User user = userService.getUser().get();

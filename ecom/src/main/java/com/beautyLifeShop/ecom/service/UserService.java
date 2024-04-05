@@ -29,7 +29,7 @@ public class UserService implements  UserDetailsService {
         String email = authentication.getName();
         Long id = userRepository.findByEmail(email).get().getId();
 
-        return userRepository.getUser(id);
+        return userRepository.findById(id);
     }
 
 
