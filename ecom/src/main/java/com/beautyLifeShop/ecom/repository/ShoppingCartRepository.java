@@ -18,4 +18,6 @@ public interface ShoppingCartRepository  extends JpaRepository<ShoppingCart, Lon
 
 
 
+
+
 }

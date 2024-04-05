@@ -23,8 +23,7 @@ public class Order {
     private Date orderDate;
     @OneToOne(cascade = CascadeType.ALL)
     private Address shippingAddress;
-    @OneToOne
-    private  ShoppingCart shoppingCart;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.PENDING;
 

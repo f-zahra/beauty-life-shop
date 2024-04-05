@@ -27,18 +27,16 @@ public class OrderService {
 
     public Order placeOrder(Order order){
         ShoppingCart userCart = shoppingCartService.getCurrentUserShoppingCart().get();
-        boolean orderExists = orderRepository.existsByShoppingCart(userCart);
-        // Check if the user already has an existing order
-        if (orderExists) {
-            // Handle case where user already has an existing order
-            throw new IllegalStateException("User already has an existing order associated with their shopping cart.");
-        }
 
-        order.setShoppingCart(userCart);
+
+       // order.setShoppingCart(userCart);
         //associate user to address
         order.getShippingAddress().setUser(userCart.getUser());
-        //get shopping cart details
-      return  orderRepository.save(order);
+        order = orderRepository.save(order);
+
+        shoppingCartService.removeAllItems(userCart);
+
+        return  order;
 
     }
 

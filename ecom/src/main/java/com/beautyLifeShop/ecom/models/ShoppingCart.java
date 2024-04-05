@@ -22,6 +22,9 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
+
     private boolean isEmpty = true;
     private int quantity;
     private double Total;
@@ -33,5 +36,11 @@ public class ShoppingCart {
     @JsonManagedReference
     private User user;
 
+    public ShoppingCart(boolean isEmpty, int quantity, double total, List<CartItem> cartItems) {
+        this.isEmpty = isEmpty;
+        this.quantity = quantity;
+        Total = total;
+        this.cartItems = cartItems;
+    }
 
 }

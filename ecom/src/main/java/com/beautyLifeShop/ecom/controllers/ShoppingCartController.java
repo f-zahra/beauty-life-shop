@@ -31,11 +31,10 @@ public class ShoppingCartController {
 
 
     @GetMapping("api/cart")
-    public ResponseEntity<Object> getShoppingCart() {
+    public ResponseEntity<ShoppingCart> getShoppingCart() {
 
         Optional<ShoppingCart> shoppingCart =  shoppingCartService.getCurrentUserShoppingCart();
-        if(shoppingCart.get().isEmpty()) {return  ResponseEntity.status(HttpStatus.OK).body("cart is empty");}
-        else return  ResponseEntity.ok(shoppingCart.get());
+       return  ResponseEntity.ok(shoppingCart.get());
     }
 
 
