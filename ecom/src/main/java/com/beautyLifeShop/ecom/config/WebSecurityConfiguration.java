@@ -35,15 +35,16 @@ public class WebSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
 
-        httpSecurity.authorizeHttpRequests(registry -> registry.requestMatchers("/api/products/**").permitAll());
+        httpSecurity.authorizeHttpRequests(registry -> registry.requestMatchers("/api/products/**", "/images/**","/login").permitAll());
+
+
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
-        httpSecurity.formLogin();
         httpSecurity.httpBasic();
         httpSecurity.csrf().disable();
         return httpSecurity.build();
     }
 
-    
+
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -59,6 +60,12 @@ public class WebSecurityConfiguration {
         return provider;
     }
 
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
     @Bean
     public PasswordEncoder passwordEncoder() {
 

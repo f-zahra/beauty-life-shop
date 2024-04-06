@@ -30,6 +30,7 @@ public class ShoppingCartController {
 
 
 
+    @CrossOrigin
     @GetMapping("api/cart")
     public ResponseEntity<ShoppingCart> getShoppingCart() {
 

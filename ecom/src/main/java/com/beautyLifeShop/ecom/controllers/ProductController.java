@@ -17,12 +17,14 @@ public class ProductController {
     private ProductService productService;
 
 
+    @CrossOrigin
     @GetMapping("api/products/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable Long id){
         Optional<Product> product = productService.loadProduct(id);
         return  ResponseEntity.ok(product.get());
     }
 
+    @CrossOrigin
     @GetMapping("api/products")
     public List<Product> getProducts(){
         return  productService.getProductList();
