@@ -23,11 +23,9 @@ export class ShopComponent {
   constructor(private productsService: ProductsService) {}
 
   ngOnInit() {
-    this.productsService
-      .getProducts('http://localhost:3000/products', { page: 0, perPage: 5 })
-      .subscribe((products: Products) => {
-        this.productList = products.products;
-      });
+    this.productsService.getAllProducts().subscribe((products) => {
+      this.productList = products;
+    });
   }
 
   onProductOutput(product: Product) {

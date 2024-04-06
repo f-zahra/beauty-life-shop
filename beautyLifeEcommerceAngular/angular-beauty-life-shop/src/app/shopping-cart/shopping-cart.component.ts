@@ -17,12 +17,10 @@ export class ShoppingCartComponent {
   items?: ShoppingCartItem[];
 
   ngOnInit(): void {
-    this.cartService
-      .getCartItems('http://localhost:3000/cart')
-      .subscribe((data: ShoppingCart) => {
-        this.items = data.items;
-        console.log(data.items);
-      });
+    this.cartService.getShoppingCart().subscribe((data: ShoppingCart) => {
+      this.items = data.items;
+      console.log(data.items);
+    });
   }
 
   getSubtotal(): number {

@@ -19,14 +19,16 @@ export class ProductDetailsComponent {
     private productService: ProductsService
   ) {}
 
-  productData!: Product;
+  productData: Product | null = null;
 
   ngOnInit() {
-    let productId = this.route.snapshot.paramMap.get('id');
-    console.log(productId);
+    let productId = this.route.snapshot.paramMap.get('id') as string;
 
     this.productService
-      .getProductbyId(`http://localhost:3000/products/${productId}`)
-      .subscribe((data) => (this.productData = data));
+      .getProductById(parseInt(productId))
+      .subscribe((data: Product) => {
+        this.productData = data;
+        console.log(this.productData);
+      });
   }
 }

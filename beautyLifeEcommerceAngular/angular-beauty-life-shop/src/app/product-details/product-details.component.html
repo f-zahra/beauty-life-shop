@@ -2,19 +2,19 @@
 <div class="product-details-container">
   <div class="detail">
     <div class="image d-flex flex-column gap">
-      <img [src]="productData.url" alt="" />
+      <img src="../assets/img/{{ productData?.url }}" alt="image" />
       <div class="other-images d-flex align-items-center">
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="" />
+          <img *ngIf="productData" [src]="productData.url" alt="image" />
         </div>
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="" />
+          <img *ngIf="productData" [src]="productData.url" alt="images" />
         </div>
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="" />
+          <img *ngIf="productData" [src]="productData.url" alt="images" />
         </div>
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="" />
+          <img *ngIf="productData" [src]="productData.url" alt="images" />
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
           [readonly]="true"
           [cancel]="false"
         ></p-rating>
-        <span class="ratingNumber">{{ productData.rating }}</span>
+        <span class="ratingNumber">{{ productData?.rating }}</span>
       </div>
       <div class="price" *ngIf="productData">{{ productData.price }}$</div>
       <div class="buttons">

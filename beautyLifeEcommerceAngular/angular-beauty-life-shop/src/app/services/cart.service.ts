@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
+
 import { Observable } from 'rxjs';
 import { Product, ShoppingCart } from '../types';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  constructor(private apiService: ApiService) {}
+  constructor(private http: HttpClient) {}
 
-  getCartItems = (url: string): Observable<ShoppingCart> => {
-    return this.apiService.get(url, {
-      responseType: 'json',
-    });
-  };
+  private apiUrl = 'http://localhost:8080/api/cart';
+
+  getShoppingCart(): Observable<ShoppingCart> {
+    return this.http.get<ShoppingCart>(this.apiUrl);
+  }
 }
