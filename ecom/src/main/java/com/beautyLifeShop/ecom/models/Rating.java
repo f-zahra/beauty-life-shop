@@ -17,7 +17,7 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String details;
-    private int note;
+    private int note=0;
     @ManyToOne
     @JoinColumn(name = "product_id")
     @JsonBackReference

@@ -15,7 +15,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-
 public class Product {
 
 
@@ -31,6 +30,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
     @JsonManagedReference
     private List<Rating> ratings;
+
     private String description;
 
 

@@ -34,6 +34,8 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
+
+        httpSecurity.authorizeHttpRequests(registry -> registry.requestMatchers("/api/products/**").permitAll());
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
         httpSecurity.formLogin();
         httpSecurity.httpBasic();
