@@ -26,7 +26,7 @@ public class ShoppingCartService {
 
     private static final String SESSION_ATTRIBUTE_NAME = "shoppingCart";
 
-    public void addItemToCart(ShoppingCart shoppingCart, Long productId) {
+    public void addItemToCart(ShoppingCart shoppingCart, Long productId, HttpSession session) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
 
@@ -60,7 +60,7 @@ public class ShoppingCartService {
         shoppingCart.setEmpty(false);
 
        // shoppingCartRepository.save(shoppingCart);
-
+        session.setAttribute(SESSION_ATTRIBUTE_NAME, shoppingCart);
 
     }
 

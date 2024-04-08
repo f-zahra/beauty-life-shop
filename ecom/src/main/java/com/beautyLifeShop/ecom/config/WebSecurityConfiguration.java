@@ -42,7 +42,7 @@ public class WebSecurityConfiguration {
 
                             )
                             .permitAll());
-
+        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
             httpSecurity.httpBasic();
@@ -77,4 +77,7 @@ public class WebSecurityConfiguration {
 
         return new BCryptPasswordEncoder();
     }
+
+
+
 }
