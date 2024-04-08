@@ -1,15 +1,11 @@
 package com.beautyLifeShop.ecom.service;
 
 
-import com.beautyLifeShop.ecom.models.Address;
-import com.beautyLifeShop.ecom.models.Order;
-import com.beautyLifeShop.ecom.models.ShoppingCart;
-import com.beautyLifeShop.ecom.models.User;
+import com.beautyLifeShop.ecom.models.*;
 import com.beautyLifeShop.ecom.repository.OrderRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -25,16 +21,21 @@ public class OrderService {
 
 
 
-    public Order placeOrder(Order order){
-        ShoppingCart userCart = shoppingCartService.getCurrentUserShoppingCart().get();
+
+    public Order placeOrder(Order order, HttpSession session){
 
 
-       // order.setShoppingCart(userCart);
-        //associate user to address
-        order.getShippingAddress().setUser(userCart.getUser());
-        order = orderRepository.save(order);
+       ShoppingCart userCart = shoppingCartService.getCart(session);
+       userCart.getCartItems().stream().forEach(i -> {
+           OrderItem orderItem = new OrderItem();
+           orderItem.setQuantity(i.getQuantity());
+  orderItem.setOrder(order);
+orderItem.setProduct(i.getProduct());
+       order.getItems().add(orderItem);
+       });
 
-        shoppingCartService.removeAllItems(userCart);
+       orderRepository.save(order);
+       session.setAttribute("shoppingCart", null);
 
         return  order;
 

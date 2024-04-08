@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,7 +25,8 @@ public class Order {
     private Date orderDate;
     @OneToOne(cascade = CascadeType.ALL)
     private Address shippingAddress;
-
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    List<OrderItem> items = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.PENDING;
 

@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +25,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)//allow role based authorization
+//allow role based authorization
 public class WebSecurityConfiguration {
 
 
@@ -35,12 +36,17 @@ public class WebSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
 
-        httpSecurity.authorizeHttpRequests(registry -> registry.requestMatchers("/api/products/**", "/images/**","/login").permitAll());
+        httpSecurity.csrf().disable();
+            httpSecurity.authorizeHttpRequests(registry ->
+                    registry.requestMatchers("/api/products/**", "/images/**","/login","api/home","api/cart/**"
+
+                            )
+                            .permitAll());
 
 
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
-        httpSecurity.httpBasic();
-        httpSecurity.csrf().disable();
+            httpSecurity.httpBasic();
+
         return httpSecurity.build();
     }
 

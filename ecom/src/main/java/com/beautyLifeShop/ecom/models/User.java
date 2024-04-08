@@ -35,9 +35,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Address> addresses;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonBackReference
-    private ShoppingCart shoppingCart;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
     private  boolean locked;

@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
-@Entity
-@Table
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,22 +19,16 @@ import java.util.List;
 public class ShoppingCart {
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+  /* @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)*/
     private Long id;
-
-
-
     private boolean isEmpty = true;
     private int quantity;
     private double Total;
-    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.MERGE)
+  // @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
    @JsonManagedReference
     private List<CartItem> cartItems;
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonManagedReference
-    private User user;
+
 
     public ShoppingCart(boolean isEmpty, int quantity, double total, List<CartItem> cartItems) {
         this.isEmpty = isEmpty;

@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Entity
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class Rating {
+public class Rating  {
 
 
     @Id
@@ -18,7 +20,7 @@ public class Rating {
     private Long id;
     private String details;
     private int note=0;
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "product_id")
     @JsonBackReference
     private Product product;
