@@ -38,11 +38,17 @@ public class WebSecurityConfiguration {
 
         httpSecurity.csrf().disable();
             httpSecurity.authorizeHttpRequests(registry ->
-                    registry.requestMatchers("/api/products/**", "/images/**","/login","api/home","api/cart/**"
+                    registry.requestMatchers("/api/products/**", "/images/**","api/login","api/home","api/cart/**"
 
                             )
                             .permitAll());
-        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    /*    httpSecurity
+                // Configure session management
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .sessionFixation().migrateSession()
+                .invalidSessionUrl("/login")
+                .maximumSessions(1).maxSessionsPreventsLogin(true);*/
 
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
             httpSecurity.httpBasic();

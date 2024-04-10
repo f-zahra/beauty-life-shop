@@ -22,12 +22,14 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
         boolean isSalesPerson = authentication.getAuthorities().stream().anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_SALESPERSON"));
 
         if(isAdmin){
-            setDefaultTargetUrl("/api/admin");
+            setDefaultTargetUrl("/api/products");
         }if(isUser) {
-            setDefaultTargetUrl("/api/user");
+            setDefaultTargetUrl("/api/products");
         }if(isSalesPerson){
             setDefaultTargetUrl("/api/salesperson");
         }
+
+
 
        // setDefaultTargetUrl();
         super.onAuthenticationSuccess(request, response, authentication);
