@@ -4,6 +4,7 @@ import com.beautyLifeShop.ecom.models.CartItem;
 import com.beautyLifeShop.ecom.models.Product;
 import com.beautyLifeShop.ecom.models.ShoppingCart;
 import com.beautyLifeShop.ecom.repository.ProductRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,12 @@ public class ShoppingCartService {
     private UserService userService;
 
 
-    @Autowired
-    private HttpSession httpSession;
 
     private static final String SESSION_ATTRIBUTE_NAME = "shoppingCart";
 
     public void addItemToCart(ShoppingCart shoppingCart, Long productId, HttpSession session) {
+
+
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
 
@@ -60,7 +61,7 @@ public class ShoppingCartService {
         shoppingCart.setEmpty(false);
 
        // shoppingCartRepository.save(shoppingCart);
-        session.setAttribute(SESSION_ATTRIBUTE_NAME, shoppingCart);
+       session.setAttribute(SESSION_ATTRIBUTE_NAME, shoppingCart);
 
     }
 

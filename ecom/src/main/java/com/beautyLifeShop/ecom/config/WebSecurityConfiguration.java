@@ -42,14 +42,11 @@ public class WebSecurityConfiguration {
 
                             )
                             .permitAll());
-       /* httpSecurity
-                // Configure session management
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .sessionFixation().migrateSession()
-                .invalidSessionUrl("/login")
-                .maximumSessions(1).maxSessionsPreventsLogin(true);*/
 
+        httpSecurity
+                .sessionManagement()
+                .sessionFixation()
+                .none();
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
             httpSecurity.httpBasic();
 

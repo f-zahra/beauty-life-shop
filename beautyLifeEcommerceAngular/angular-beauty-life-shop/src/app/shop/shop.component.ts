@@ -20,6 +20,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class ShopComponent {
   productList: Product[] = [];
+
   constructor(private productsService: ProductsService) {}
 
   ngOnInit() {
