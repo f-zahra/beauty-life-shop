@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Rating  {
+public class Rating  implements  Serializable{
 
 
     @Id

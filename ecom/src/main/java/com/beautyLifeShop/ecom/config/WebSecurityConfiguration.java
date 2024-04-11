@@ -42,7 +42,7 @@ public class WebSecurityConfiguration {
 
                             )
                             .permitAll());
-    /*    httpSecurity
+       /* httpSecurity
                 // Configure session management
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

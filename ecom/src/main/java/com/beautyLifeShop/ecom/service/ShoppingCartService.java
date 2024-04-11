@@ -39,7 +39,7 @@ public class ShoppingCartService {
         cartItem.setShoppingCart(shoppingCart);
 
 
-
+        //itemRepository.save(cartItem);
         // Add the cart item to the shopping cart
          shoppingCart.getCartItems().add(cartItem);
 
@@ -59,7 +59,7 @@ public class ShoppingCartService {
         shoppingCart.setTotal(shoppingCart.getQuantity()*quantity_per_item*totalPrice_per_item);
         shoppingCart.setEmpty(false);
 
-
+       // shoppingCartRepository.save(shoppingCart);
         session.setAttribute(SESSION_ATTRIBUTE_NAME, shoppingCart);
 
     }
@@ -89,6 +89,8 @@ public class ShoppingCartService {
         // Update the shopping cart in the session
         session.setAttribute(SESSION_ATTRIBUTE_NAME, shoppingCart);
     }
+
+
 
 
 
