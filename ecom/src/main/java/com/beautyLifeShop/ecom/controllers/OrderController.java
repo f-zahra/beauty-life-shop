@@ -23,7 +23,7 @@ public class OrderController {
     }
 
     @GetMapping(path="api/order")
-    public String placeOrder(HttpSession session)
+    public String getOrder(HttpSession session)
     {
         return "order page";
 
