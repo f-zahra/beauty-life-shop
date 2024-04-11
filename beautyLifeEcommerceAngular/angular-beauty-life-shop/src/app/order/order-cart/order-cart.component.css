@@ -1,0 +1,21 @@
+.product img {
+  width: 15%;
+  border-radius: 5%;
+}
+
+.product {
+  margin-top: 15%;
+}
+
+.product div {
+  align-content: center;
+}
+
+.cart {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.cart > * {
+  margin-bottom: 5%;
+}
