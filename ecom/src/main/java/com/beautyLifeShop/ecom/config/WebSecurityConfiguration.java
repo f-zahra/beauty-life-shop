@@ -42,8 +42,11 @@ public class WebSecurityConfiguration {
 
                             )
                             .permitAll());
-        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        httpSecurity
+                .sessionManagement()
+                .sessionFixation()
+                .none();
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
             httpSecurity.httpBasic();
 
