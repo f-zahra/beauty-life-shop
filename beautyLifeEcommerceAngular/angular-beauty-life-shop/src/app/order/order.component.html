@@ -1,1 +1,60 @@
-<p>order works!</p>
+<div class="container">
+  <div class="d-flex">
+    <div class="col-8 order-form">
+      <div class="flex-container">
+        <div class="flex-column">
+          <div class="flex-item">
+            <div class="shipping-form flex-column">
+              <p><strong> Delivery</strong></p>
+              <!-- select country -->
+              <select class="country-select form-select">
+                <option value="option1">Canada</option>
+              </select>
+              <!-- name -->
+              <div class="d-flex flex-row gap-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  name="firstName"
+                  id=""
+                  placeholder="first name"
+                />
+                <input
+                  class="form-control"
+                  type="text"
+                  name="lastname"
+                  placeholder="last name"
+                />
+              </div>
+              <!-- adresse -->
+              <div class="address">
+                <input type="text" class="form-control" placeholder="address" />
+                <div class="d-flex flex-row gap-3 mt-3">
+                  <input type="text" class="form-control" placeholder="City" />
+                  <select class="province-select form-select">
+                    <option value="qc">Quebec</option>
+                  </select>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Postal code"
+                  />
+                </div>
+              </div>
+              <input type="text" class="form-control" placeholder="Phone" />
+            </div>
+            <div class="payment d-flex flex-column">
+              <p><strong> Payment</strong></p>
+              <button type="submit" class="btn btn-primary">
+                Pay with Paypal
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="order-cart">
+      <app-order-cart></app-order-cart>
+    </div>
+  </div>
+</div>

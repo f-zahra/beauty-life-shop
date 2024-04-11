@@ -24,8 +24,9 @@ export const routes: Routes = [
   },
 
   {
-    path: 'order',
+    path: 'checkout',
     component: OrderComponent,
+    canActivate: [authenticationGuard],
   },
 
   {

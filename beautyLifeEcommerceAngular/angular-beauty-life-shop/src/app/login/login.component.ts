@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AuthenticationRequest } from '../types';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TokenServiceService } from '../services/token-service.service';
 
 @Component({
@@ -19,6 +19,7 @@ export class LoginComponent {
 
   constructor(
     private auth: AuthenticationService,
+    private route: ActivatedRoute,
     private router: Router,
     private tokenService: TokenServiceService
   ) {}
@@ -30,7 +31,10 @@ export class LoginComponent {
     this.auth.authenticate(this.authRequest).subscribe({
       next: (res): void => {
         localStorage.setItem('token', res.token);
-        console.log('user authenticated');
+        // get return url from query parameters or default to home page
+        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        console.log(returnUrl);
+        this.router.navigateByUrl(returnUrl);
       },
       error: (err): void => {
         console.log(err);
