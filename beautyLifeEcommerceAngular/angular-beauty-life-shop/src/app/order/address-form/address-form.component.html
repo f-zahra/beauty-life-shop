@@ -1,0 +1,174 @@
+<form
+  #myForm="ngForm"
+  class="d-flex flex-column gap-3 p-3 needs-validation"
+  [attr.disabled]="isFormDisabled ? 'disabled' : null"
+  novalidate
+>
+  <!-- select country -->
+  <select
+    class="country-select form-select"
+    [disabled]="isFormDisabled"
+    name="country"
+    ngModel
+    required
+  >
+    <option>Canada</option>
+  </select>
+  <div
+    class="text-danger"
+    *ngIf="
+      myForm.controls['country'].invalid &&
+      (myForm.controls['country'].touched || isFormSubmited)
+    "
+  >
+    Country is required
+  </div>
+
+  <!-- name -->
+  <div class="d-flex flex-row gap-3">
+    <input
+      class="form-control"
+      type="text"
+      name="firstName"
+      ngModel
+      placeholder="first name"
+      [disabled]="isFormDisabled"
+      pattern="[A-Za-z]*"
+      required
+      #firstNameInput="ngModel"
+    />
+    <div
+      *ngIf="
+        firstNameInput.invalid &&
+        (firstNameInput.dirty || firstNameInput.touched || isFormSubmited)
+      "
+      class="text-danger"
+    >
+      Please enter a valid first name (only letters).
+    </div>
+
+    <input
+      class="form-control"
+      type="text"
+      name="lastname"
+      ngModel
+      placeholder="last name"
+      [disabled]="isFormDisabled"
+      pattern="[A-Za-z]*"
+      required
+      #lastNameInput="ngModel"
+    />
+    <div
+      *ngIf="
+        lastNameInput.invalid &&
+        (lastNameInput.dirty || lastNameInput.touched || isFormSubmited)
+      "
+      class="text-danger"
+    >
+      Please enter a valid last name (only letters).
+    </div>
+  </div>
+
+  <!-- address -->
+  <div class="address">
+    <input
+      type="text"
+      class="form-control"
+      name="street"
+      ngModel
+      placeholder="address"
+      [disabled]="isFormDisabled"
+      pattern="[A-Za-z0-9\s]*"
+      required
+      #streetInput="ngModel"
+    />
+    <div
+      *ngIf="
+        streetInput.invalid &&
+        (streetInput.dirty || streetInput.touched || isFormSubmited)
+      "
+      class="text-danger"
+    >
+      Please enter a valid address (only letters, numbers, and spaces).
+    </div>
+
+    <div class="d-flex flex-row gap-3 mt-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="City"
+        name="city"
+        ngModel
+        [disabled]="isFormDisabled"
+        pattern="[A-Za-z]*"
+        required
+        #cityInput="ngModel"
+      />
+      <div
+        *ngIf="
+          cityInput.invalid &&
+          (cityInput.dirty || cityInput.touched || isFormSubmited)
+        "
+        class="text-danger"
+      >
+        Please enter a valid city name (only letters).
+      </div>
+
+      <select
+        class="province-select form-select"
+        [disabled]="isFormDisabled"
+        name="province"
+        ngModel
+        required
+      >
+        <option>Quebec</option>
+      </select>
+
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Postal code"
+        [disabled]="isFormDisabled"
+        name="postalCode"
+        ngModel
+        pattern="[A-Za-z0-9]*"
+        required
+        #postalCodeInput="ngModel"
+      />
+      <div
+        *ngIf="
+          postalCodeInput.invalid &&
+          (postalCodeInput.dirty || postalCodeInput.touched || isFormSubmited)
+        "
+        class="text-danger"
+      >
+        Please enter a valid postal code (only letters and numbers).
+      </div>
+    </div>
+  </div>
+
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Phone"
+    [disabled]="isFormDisabled"
+    name="phone"
+    ngModel
+    pattern="[0-9]*"
+    required
+    #phoneInput="ngModel"
+  />
+  <div
+    *ngIf="
+      phoneInput.invalid &&
+      (phoneInput.dirty || phoneInput.touched || isFormSubmited)
+    "
+    class="text-danger"
+  >
+    Please enter a valid phone number (only numbers).
+  </div>
+
+  <button class="btn" (click)="onSubmit(myForm)" [disabled]="isFormDisabled">
+    submit
+  </button>
+</form>

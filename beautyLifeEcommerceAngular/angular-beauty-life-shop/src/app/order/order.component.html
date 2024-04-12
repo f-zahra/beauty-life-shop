@@ -15,6 +15,7 @@
               id="radioDefaultAddress"
               value="defaultAddress"
               (change)="toggle()"
+              checked
             />
             <div class="flex-grow-1">get user address</div>
           </div>
@@ -33,87 +34,9 @@
               <div class="flex-grow-1"><strong>add new address</strong></div>
             </div>
 
-            <form
-              #myForm="ngForm"
-              class="d-flex flex-column gap-3 p-3"
-              [attr.disabled]="isFormDisabled ? 'disabled' : null"
-              (ngSubmit)="onSubmit(myForm.value)"
-            >
-              <!-- select country -->
-              <select
-                class="country-select form-select"
-                [disabled]="isFormDisabled"
-                name="country"
-                ngModel
-              >
-                <option>Canada</option>
-              </select>
-              <!-- name -->
-              <div class="d-flex flex-row gap-3">
-                <input
-                  class="form-control"
-                  type="text"
-                  name="firstName"
-                  ngModel
-                  placeholder="first name"
-                  [disabled]="isFormDisabled"
-                />
-                <input
-                  class="form-control"
-                  type="text"
-                  name="lastname"
-                  ngModel
-                  placeholder="last name"
-                  [disabled]="isFormDisabled"
-                />
-              </div>
-              <!-- address -->
-              <div class="address">
-                <input
-                  type="text"
-                  class="form-control"
-                  name="street"
-                  ngModel
-                  placeholder="address"
-                  [disabled]="isFormDisabled"
-                />
-                <div class="d-flex flex-row gap-3 mt-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="City"
-                    name="city"
-                    ngModel
-                    [disabled]="isFormDisabled"
-                  />
-                  <select
-                    class="province-select form-select"
-                    [disabled]="isFormDisabled"
-                    name="province"
-                    ngModel
-                  >
-                    <option>Quebec</option>
-                  </select>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Postal code"
-                    [disabled]="isFormDisabled"
-                    name="postalCode"
-                    ngModel
-                  />
-                </div>
-              </div>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Phone"
-                [disabled]="isFormDisabled"
-                name="phone"
-                ngModel
-              />
-              <button class="btn" [disabled]="isFormDisabled">submit</button>
-            </form>
+            <app-address-form
+              [isFormDisabled]="isFormDisabled"
+            ></app-address-form>
           </div>
           <!-- end new address -->
 
