@@ -18,9 +18,14 @@
   margin-bottom: 5%;
 }
 
+.user-address {
+  background-color: rgb(246, 243, 238);
+  border-radius: 5px;
+}
+
 @media (max-width: 960px) {
-  .container .d-flex {
-    flex-direction: column-reverse;
+  .order-container {
+    flex-direction: column;
   }
   .order-form {
     width: auto;

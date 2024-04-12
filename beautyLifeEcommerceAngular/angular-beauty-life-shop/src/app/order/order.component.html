@@ -1,14 +1,52 @@
-<div class="container">
-  <div class="d-flex">
-    <div class="col-8 order-form">
-      <div class="flex-container">
-        <div class="flex-column">
-          <div class="flex-item">
-            <div class="shipping-form flex-column">
-              <p><strong> Delivery</strong></p>
+<div class="order-container d-flex">
+  <div class="col-8 order-form d-flex flex-row justify-content-center">
+    <div class="flex-item">
+      <div>
+        <h2>Delivery:</h2>
+        <h6>select shipping address</h6>
+        <div class="address-list d-flex flex-column mb-3 gap-3">
+          <!-- default address -->
+
+          <div class="user-address p-3 d-flex flex-row gap-3">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="radioAddress"
+              id="radioDefaultAddress"
+              value="defaultAddress"
+              (change)="toggle()"
+            />
+            <div class="flex-grow-1">get user address</div>
+          </div>
+
+          <!-- new address -->
+          <div class="user-address shipping-form">
+            <div class="p-3 d-flex flex-row gap-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="radioAddress"
+                id="radioNewAddress"
+                value="newAddress"
+                (change)="toggle()"
+              />
+              <div class="flex-grow-1"><strong>add new address</strong></div>
+            </div>
+
+            <form
+              #myForm="ngForm"
+              class="d-flex flex-column gap-3 p-3"
+              [attr.disabled]="isFormDisabled ? 'disabled' : null"
+              (ngSubmit)="onSubmit(myForm.value)"
+            >
               <!-- select country -->
-              <select class="country-select form-select">
-                <option value="option1">Canada</option>
+              <select
+                class="country-select form-select"
+                [disabled]="isFormDisabled"
+                name="country"
+                ngModel
+              >
+                <option>Canada</option>
               </select>
               <!-- name -->
               <div class="d-flex flex-row gap-3">
@@ -16,45 +54,80 @@
                   class="form-control"
                   type="text"
                   name="firstName"
-                  id=""
+                  ngModel
                   placeholder="first name"
+                  [disabled]="isFormDisabled"
                 />
                 <input
                   class="form-control"
                   type="text"
                   name="lastname"
+                  ngModel
                   placeholder="last name"
+                  [disabled]="isFormDisabled"
                 />
               </div>
-              <!-- adresse -->
+              <!-- address -->
               <div class="address">
-                <input type="text" class="form-control" placeholder="address" />
+                <input
+                  type="text"
+                  class="form-control"
+                  name="street"
+                  ngModel
+                  placeholder="address"
+                  [disabled]="isFormDisabled"
+                />
                 <div class="d-flex flex-row gap-3 mt-3">
-                  <input type="text" class="form-control" placeholder="City" />
-                  <select class="province-select form-select">
-                    <option value="qc">Quebec</option>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="City"
+                    name="city"
+                    ngModel
+                    [disabled]="isFormDisabled"
+                  />
+                  <select
+                    class="province-select form-select"
+                    [disabled]="isFormDisabled"
+                    name="province"
+                    ngModel
+                  >
+                    <option>Quebec</option>
                   </select>
                   <input
                     type="text"
                     class="form-control"
                     placeholder="Postal code"
+                    [disabled]="isFormDisabled"
+                    name="postalCode"
+                    ngModel
                   />
                 </div>
               </div>
-              <input type="text" class="form-control" placeholder="Phone" />
-            </div>
-            <div class="payment d-flex flex-column">
-              <p><strong> Payment</strong></p>
-              <button type="submit" class="btn btn-primary">
-                Pay with Paypal
-              </button>
-            </div>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Phone"
+                [disabled]="isFormDisabled"
+                name="phone"
+                ngModel
+              />
+              <button class="btn" [disabled]="isFormDisabled">submit</button>
+            </form>
+          </div>
+          <!-- end new address -->
+
+          <div class="payment d-flex flex-column">
+            <p><strong> Payment</strong></p>
+            <button type="submit" class="btn btn-primary">
+              Pay with Paypal
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <div class="order-cart">
-      <app-order-cart></app-order-cart>
-    </div>
+  </div>
+  <div class="order-cart flex-item">
+    <app-order-cart></app-order-cart>
   </div>
 </div>
