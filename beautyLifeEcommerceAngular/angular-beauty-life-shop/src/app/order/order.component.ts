@@ -4,6 +4,8 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { NgIf } from '@angular/common';
 import { AddressFormComponent } from './address-form/address-form.component';
+import { UserService } from '../services/user.service';
+import { Address, User } from '../types';
 
 @Component({
   selector: 'app-order',
@@ -20,25 +22,24 @@ import { AddressFormComponent } from './address-form/address-form.component';
 })
 export class OrderComponent {
   isFormDisabled: boolean = true;
+  userAddress!: Address;
+  userData!: User;
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    //get user info
+    this.userService.getUser().subscribe((data) => {
+      this.userData = data;
+      this.userAddress = data.addresses[0];
+    });
+  }
 
   toggle() {
     this.isFormDisabled = !this.isFormDisabled;
   }
-  // onSubmit(arg0: any) {
-  //   throw new Error('Method not implemented.');
-  // }
 
   isFormSubmited: boolean = false;
-
-  userObj: any = {
-    firstName: '',
-    lastName: '',
-    userName: '',
-    city: '',
-    state: '',
-    zipcode: '',
-    isAggree: false,
-  };
 
   onSubmit(form: NgForm) {
     const isFormValid = form.form.valid;

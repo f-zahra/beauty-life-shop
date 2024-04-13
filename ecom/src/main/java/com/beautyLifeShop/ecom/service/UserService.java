@@ -27,9 +27,12 @@ public class UserService implements  UserDetailsService {
     public Optional<User> getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        Long id = userRepository.findByEmail(email).get().getId();
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if(userOptional.isPresent()){
+            return Optional.of(userOptional.get());
 
-        return userRepository.findById(id);
+        }else  return Optional.ofNullable(userOptional.get());
+
     }
 
 

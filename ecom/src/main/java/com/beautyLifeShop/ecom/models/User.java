@@ -32,6 +32,7 @@ public class User implements UserDetails {
     private String firstname;
     private String lastname;
     private String email;
+    private int phoneNumber;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Address> addresses;
