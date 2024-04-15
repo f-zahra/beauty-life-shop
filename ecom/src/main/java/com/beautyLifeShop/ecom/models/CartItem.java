@@ -18,17 +18,29 @@ public class CartItem  implements  Serializable{
 
          //@Id
 
-        private Long id;
+        private String itemId;
         private int quantity;
- /*   @ManyToOne
-    @JoinColumn(name = "shopping_cart_id")
-    @JsonIgnore*/
+
         @JsonBackReference
         private ShoppingCart shoppingCart;
-          /*      @ManyToOne
-        @JoinColumn(name = "product_id")*/
+
 
         private Product product;
+            private Double Total;
 
+
+        public void incrementQuantity(){
+            if(this.quantity<5) { this.quantity++; updateTotal();}
+
+        }
+
+        public void decrementQuantity(){
+        if(this.quantity>0) { this.quantity--; updateTotal();}
+
+             }
+
+    public void updateTotal(){
+         this.Total =  this.quantity*this.product.getPrice();
+    }
 
 }

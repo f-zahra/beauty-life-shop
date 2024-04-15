@@ -6,6 +6,7 @@ import { NgIf } from '@angular/common';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { UserService } from '../services/user.service';
 import { Address, User } from '../types';
+import { OrderService } from '../services/order.service';
 
 @Component({
   selector: 'app-order',

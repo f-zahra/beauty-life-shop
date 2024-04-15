@@ -19,7 +19,7 @@ export interface Products {
 }
 
 export interface ShoppingCartItem {
-  id: number;
+  itemId: String;
   quantity: number;
   shoppingCart: ShoppingCart;
   product: Product;
@@ -31,6 +31,7 @@ export interface ShoppingCart {
   quantity: number;
   total: number; // Assuming Total maps to number in TypeScript
   cartItems: ShoppingCartItem[];
+  shippingCost: number;
 }
 
 export interface Order {
@@ -39,6 +40,7 @@ export interface Order {
   shippingAddress: Address;
   items: OrderItem[];
   orderStatus: OrderStatus;
+  shippingCost: number;
 }
 
 export enum OrderStatus {

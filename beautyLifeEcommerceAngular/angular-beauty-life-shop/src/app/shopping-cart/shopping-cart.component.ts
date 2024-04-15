@@ -12,21 +12,44 @@ import { ShoppingCart, ShoppingCartItem, Product } from '../types';
   styleUrl: './shopping-cart.component.css',
 })
 export class ShoppingCartComponent {
+  items!: ShoppingCartItem[];
+  cart!: ShoppingCart;
   constructor(private cartService: CartService, private router: Router) {}
 
   @Output() cartItemsChange = new EventEmitter<ShoppingCart[]>();
-  items?: ShoppingCartItem[];
-  cart?: ShoppingCart;
 
   ngOnInit(): void {
-    this.cartService.getShoppingCart().subscribe((data: ShoppingCart) => {
+    this.getCart();
+  }
+
+  navigateToOrder(): void {
+    this.router.navigate(['/checkout']);
+  }
+
+  getCart(): void {
+    this.cartService.getShoppingCart().subscribe((data) => {
       this.items = data.cartItems;
+      this.cart = data;
       console.log(this.items);
       console.log(data);
     });
   }
 
-  navigateToAbout(): void {
-    this.router.navigate(['/order']);
+  increment(id: number) {
+    this.cartService.addItemToCart(id).subscribe(() => {
+      this.getCart();
+    });
+  }
+
+  removeItem(cartId: String) {
+    console.log(cartId);
+    this.cartService.removeitemFromCart(cartId).subscribe(() => {
+      this.getCart();
+    });
+  }
+  decrementQuatity(id: number) {
+    this.cartService.decrementItem(id).subscribe(() => {
+      this.getCart();
+    });
   }
 }

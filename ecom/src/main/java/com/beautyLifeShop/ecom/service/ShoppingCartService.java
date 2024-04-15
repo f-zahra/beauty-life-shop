@@ -27,41 +27,42 @@ public class ShoppingCartService {
 
     public void addItemToCart(ShoppingCart shoppingCart, Long productId, HttpSession session) {
 
+        //verify if the same product exist in shopping cart
 
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
+        Optional<CartItem> foundProduct = shoppingCart.getCartItems().stream().filter(e -> e.getProduct().getId().equals(productId)).findFirst();
 
-        // Create a new CartItem and associate it with the shopping cart
-        CartItem cartItem = new CartItem();
-        Random rnd = new Random(50);
-        cartItem.setId(rnd.nextLong());
-        cartItem.setProduct(product);
-        cartItem.setQuantity(1);
-        cartItem.setShoppingCart(shoppingCart);
+        //get item
+         CartItem cartItem;
+         if (!foundProduct.isPresent()) {
+             //search for product
+            Product product = productRepository.findById(productId)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
+
+            // Create a new CartItem and associate it with the shopping cart
+
+            cartItem = new CartItem();
+            Random rnd = new Random();
+            cartItem.setItemId(String.valueOf(rnd.nextLong()));
+            cartItem.setProduct(product);
+            cartItem.setQuantity(1);
+            cartItem.setTotal(product.getPrice());
+            cartItem.setShoppingCart(shoppingCart);
+             // Add the cart item to the shopping cart
+             shoppingCart.getCartItems().add(cartItem);
+            shoppingCart.incrementQuantity();
+
+        }
+        else {
+                foundProduct.get().incrementQuantity();
 
 
-        //itemRepository.save(cartItem);
-        // Add the cart item to the shopping cart
-         shoppingCart.getCartItems().add(cartItem);
+         }
+
+        shoppingCart.resetTotal();
+        session.setAttribute(SESSION_ATTRIBUTE_NAME, shoppingCart);
 
 
-        //get number of items in the shopping cart
-        int cart_item_qt =  shoppingCart.getCartItems().size();
-        //get qt of products per item
-        int quantity_per_item = cartItem.getQuantity();
-        //get bill total per item
-        double totalPrice_per_item = cartItem.getProduct().getPrice();
-
-        shoppingCart.setQuantity(cart_item_qt);
-
-
-        //set total
-
-        shoppingCart.setTotal(shoppingCart.getQuantity()*quantity_per_item*totalPrice_per_item);
-        shoppingCart.setEmpty(false);
-
-       // shoppingCartRepository.save(shoppingCart);
-       session.setAttribute(SESSION_ATTRIBUTE_NAME, shoppingCart);
+       //session.setAttribute(SESSION_ATTRIBUTE_NAME, shoppingCart);
 
     }
 
@@ -86,16 +87,46 @@ public class ShoppingCartService {
         return cart;
     }
 
-    public void updateShoppingCart(HttpSession session, ShoppingCart shoppingCart) {
-        // Update the shopping cart in the session
-        session.setAttribute(SESSION_ATTRIBUTE_NAME, shoppingCart);
+
+
+
+    public void removeItemFromCart(ShoppingCart cart, String cartId, HttpSession session) {
+        //verify if the same product exist in shopping cart
+        Optional<CartItem> foundItem = cart.getCartItems().stream()
+                .filter(item -> item.getItemId().equals(cartId))
+                .findFirst();
+
+         if(!foundItem.isEmpty()){
+
+             cart.getCartItems().remove(foundItem.get());
+            // session.setAttribute(SESSION_ATTRIBUTE_NAME, cart);
+             //update cart
+
+             cart.decrementQuantity();
+
+
+             cart.resetTotal();
+         }else {
+
+         }
+
+       session.setAttribute(SESSION_ATTRIBUTE_NAME, cart);
+
     }
 
+    public void removeItem(ShoppingCart cart, Long productId, HttpSession session) {
 
+        Optional<CartItem> foundProduct = cart.getCartItems().stream().filter(e -> e.getProduct().getId().equals(productId)).findFirst();
 
+        if(!foundProduct.isEmpty()) {
+            if (foundProduct.get().getQuantity() > 1) {
+                foundProduct.get().decrementQuantity();
+            } else {
+                cart.getCartItems().remove(foundProduct.get());
+            }
+        }
 
-
-
-
-   
+        cart.resetTotal();
+        session.setAttribute(SESSION_ATTRIBUTE_NAME, cart);
+    }
 }

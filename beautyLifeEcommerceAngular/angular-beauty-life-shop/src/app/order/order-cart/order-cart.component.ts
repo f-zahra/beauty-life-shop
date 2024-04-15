@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ShoppingCart } from '../../types';
 import { CartService } from '../../services/cart.service';
@@ -12,7 +12,7 @@ import { CartService } from '../../services/cart.service';
 })
 export class OrderCartComponent {
   cart!: ShoppingCart;
-
+  @Input() shippingCost!: number;
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {

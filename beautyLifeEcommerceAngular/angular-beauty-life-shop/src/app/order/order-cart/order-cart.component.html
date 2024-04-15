@@ -13,7 +13,7 @@
           CAD <span>{{ cart.total }}</span> $
         </p>
       </div>
-      <div class="promo d-flex flex-row">
+      <div class="promo d-flex flex-row gap-2">
         <input type="text" class="form-control" placeholder="Dicount code" />
         <button class="btn">Apply</button>
       </div>
@@ -26,7 +26,7 @@
         </div>
         <div class="d-flex justify-content-between">
           <p>Shipping</p>
-          <p>--</p>
+          <p>{{ cart.shippingCost }}</p>
         </div>
         <div class="d-flex justify-content-between">
           <p><strong>Total</strong></p>

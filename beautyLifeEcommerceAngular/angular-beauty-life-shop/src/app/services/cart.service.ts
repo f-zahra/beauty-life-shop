@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, catchError, tap } from 'rxjs';
-import { Product, ShoppingCart } from '../types';
+import { Product, ShoppingCart, ShoppingCartItem } from '../types';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -13,12 +13,40 @@ export class CartService {
   constructor(private http: HttpClient) {}
 
   getShoppingCart(): Observable<ShoppingCart> {
-    return this.http.get<ShoppingCart>(this.apiUrl, { withCredentials: true });
+    return this.http.get<ShoppingCart>(this.apiUrl, {
+      withCredentials: true,
+    });
+  }
+
+  getCartItems(): Observable<ShoppingCartItem[]> {
+    return this.http.get<ShoppingCartItem[]>(this.apiUrl + '/cartItems', {
+      withCredentials: true,
+    });
   }
 
   addItemToCart(productId: number): Observable<string> {
     return this.http.post<string>(
       `${this.apiUrl}/add?productId=${productId}`,
+      null,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  decrementItem(id: number) {
+    return this.http.post<string>(
+      `${this.apiUrl}/remove?productId=${id}`,
+      null,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  removeitemFromCart(cartId: String) {
+    return this.http.post<String>(
+      `${this.apiUrl}/removeItem?cartId=${cartId}`,
       null,
       {
         withCredentials: true,

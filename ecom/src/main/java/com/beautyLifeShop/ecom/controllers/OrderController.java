@@ -22,12 +22,6 @@ public class OrderController {
 
     }
 
-    @GetMapping(path="api/order")
-    public String getOrder(HttpSession session)
-    {
-        return "order page";
-
-    }
 
 
 }

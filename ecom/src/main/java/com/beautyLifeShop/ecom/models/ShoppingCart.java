@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -21,7 +22,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ShoppingCart implements Serializable{
 
-    private static final long serialVersionUID = 1L;
 
 
     /* @Id
@@ -33,7 +33,7 @@ public class ShoppingCart implements Serializable{
   // @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
    @JsonManagedReference
     private List<CartItem> cartItems = new ArrayList<>();
-
+    private final Double shippingCost = 9.55;
 
     public ShoppingCart(boolean isEmpty, int quantity, double total, List<CartItem> cartItems) {
         this.isEmpty = isEmpty;
@@ -42,14 +42,47 @@ public class ShoppingCart implements Serializable{
         this.cartItems = cartItems;
     }
 
-    public List<CartItem> getItems() {
-        return cartItems;
-    }
+
 
     public void addItem(CartItem cartItem) {
         cartItems.add(cartItem);
     }
 
+    public void incrementQuantity(){
+        this.quantity++;
+    }
+
+    public void decrementQuantity(){
+
+        this.quantity--;
+
+    }
+
+
+
+
+
+    public void resetTotal(){
+
+
+        if(cartItems.isEmpty())
+
+        {   this.Total = 0;
+            this.quantity=0;
+            this.isEmpty =true;}
+
+        else {
+            this.isEmpty=false;
+
+           this.Total =  cartItems.stream()
+                    .mapToDouble(CartItem::getTotal) // Map each item to its quantity
+                    .sum();
+        }
+
+
+
+
+    }
 
 
     private void writeObject(ObjectOutputStream out) throws IOException {
