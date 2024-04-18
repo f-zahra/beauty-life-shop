@@ -13,6 +13,6 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleCustomException(RuntimeException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("failed: " + ex.getMessage());
+                .body("failed : " + ex.getMessage());
     }
 }
