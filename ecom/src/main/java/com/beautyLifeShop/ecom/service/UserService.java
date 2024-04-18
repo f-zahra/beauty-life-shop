@@ -2,6 +2,7 @@ package com.beautyLifeShop.ecom.service;
 
 
 import com.beautyLifeShop.ecom.config.Encoder;
+import com.beautyLifeShop.ecom.models.Address;
 import com.beautyLifeShop.ecom.models.User;
 import com.beautyLifeShop.ecom.models.UserRequest;
 import com.beautyLifeShop.ecom.repository.UserRepository;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,6 +44,14 @@ public class UserService implements  UserDetailsService {
 
     }
 
+
+    public List<Address> getAddress() {
+        //get user
+        User user = this.getUser().get();
+         return user.getAddresses();
+
+
+    }
     public Optional<User> getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -52,6 +62,7 @@ public class UserService implements  UserDetailsService {
         }else  return Optional.ofNullable(userOptional.get());
 
     }
+
 
 
 

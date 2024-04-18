@@ -21,6 +21,7 @@ public class Address {
     private String state;
     private String postalCode;
     private String country;
+    private boolean isDefault= true;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
