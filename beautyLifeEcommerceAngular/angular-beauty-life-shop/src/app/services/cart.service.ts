@@ -1,17 +1,56 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from './api.service';
-import { Observable } from 'rxjs';
-import { Product, ShoppingCart } from '../types';
+
+import { Observable, catchError, tap } from 'rxjs';
+import { Product, ShoppingCart, ShoppingCartItem } from '../types';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  constructor(private apiService: ApiService) {}
+  private apiUrl = 'http://localhost:8080/api/cart';
 
-  getCartItems = (url: string): Observable<ShoppingCart> => {
-    return this.apiService.get(url, {
-      responseType: 'json',
+  constructor(private http: HttpClient) {}
+
+  getShoppingCart() {
+    return this.http.get<ShoppingCart>(this.apiUrl, {
+      withCredentials: true,
     });
-  };
+  }
+
+  getCartItems() {
+    return this.http.get<ShoppingCartItem[]>(this.apiUrl + '/cartItems', {
+      withCredentials: true,
+    });
+  }
+
+  addItemToCart(productId: number) {
+    return this.http.post<string>(
+      `${this.apiUrl}/add?productId=${productId}`,
+      null,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  decrementItem(id: number) {
+    return this.http.post<string>(
+      `${this.apiUrl}/remove?productId=${id}`,
+      null,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  removeitemFromCart(cartId: String) {
+    return this.http.post<String>(
+      `${this.apiUrl}/removeItem?cartId=${cartId}`,
+      null,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

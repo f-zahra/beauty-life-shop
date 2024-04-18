@@ -2,19 +2,19 @@
 <div class="product-details-container">
   <div class="detail">
     <div class="image d-flex flex-column gap">
-      <img [src]="productData.url" alt="" />
+      <img src="../assets/img/{{ productData.url }}" alt="image" />
       <div class="other-images d-flex align-items-center">
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="" />
+          <img *ngIf="productData" [src]="productData.url" alt="image" />
         </div>
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="" />
+          <img *ngIf="productData" [src]="productData.url" alt="images" />
         </div>
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="" />
+          <img *ngIf="productData" [src]="productData.url" alt="images" />
         </div>
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="" />
+          <img *ngIf="productData" [src]="productData.url" alt="images" />
         </div>
       </div>
     </div>
@@ -22,18 +22,20 @@
     <div class="content">
       <h6 class="name" *ngIf="productData">{{ productData.name }}</h6>
       <div class="rating">
-        <p-rating
-          *ngIf="productData"
-          [(ngModel)]="productData.rating"
-          [readonly]="true"
-          [cancel]="false"
-        ></p-rating>
+        <ng-container *ngIf="productData.rating; else noReview">
+          <p-rating
+            [(ngModel)]="productData.rating"
+            [readonly]="true"
+            [cancel]="false"
+          ></p-rating>
+        </ng-container>
+        <ng-template #noReview>
+          <p class="text-muted">No review</p>
+        </ng-template>
         <span class="ratingNumber">{{ productData.rating }}</span>
       </div>
       <div class="price" *ngIf="productData">{{ productData.price }}$</div>
-      <div class="buttons">
-        <button>Add to Cart</button>
-      </div>
+      <app-add-to-cart-button [productId]="productId"></app-add-to-cart-button>
       <div class="description" *ngIf="productData">
         {{ productData.description }}
       </div>

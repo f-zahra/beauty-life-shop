@@ -1,0 +1,90 @@
+<div class="order-container d-flex">
+  <div class="order-form d-flex flex-row col-6">
+    <div class="flex-item">
+      <div>
+        <h2>Delivery:</h2>
+
+        <div class="address-list d-flex flex-column mb-3 gap-3">
+          <h6>select shipping address</h6>
+          <!-- default address -->
+
+          <div class="user-address p-3 d-flex flex-row gap-3">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="radioAddress"
+              id="radioDefaultAddress"
+              value="defaultAddress"
+              (change)="toggle()"
+              checked
+            />
+            <div class="d-flex flex-column">
+              <div class="d-flex flex-row gap-1">
+                <strong>
+                  <span>{{ userData.firstname }}</span></strong
+                >
+                <strong
+                  ><span>{{ userData.lastname }}</span></strong
+                >
+              </div>
+              <div class="defaultAddress flex-grow-1 d-flex gap-1">
+                <span>{{ userAddress.street }},</span>
+                <span>{{ userAddress.city }},</span>
+                <span>{{ userAddress.country }},</span>
+                <span>{{ userAddress.state }},</span>
+                <span>{{ userAddress.postalCode }},</span>
+                <span>| {{ userData.phoneNumber }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- new address -->
+          <div class="user-address shipping-form">
+            <div class="p-3 d-flex flex-row gap-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="radioAddress"
+                id="radioNewAddress"
+                value="newAddress"
+                (change)="toggle()"
+              />
+              <div class="flex-grow-1">
+                <strong>add new shipping address</strong>
+              </div>
+            </div>
+
+            <app-address-form
+              [isFormDisabled]="isFormDisabled"
+            ></app-address-form>
+          </div>
+          <!-- end new address -->
+
+          <div class="shipping d-flex flex-column pe-2">
+            <p><strong> Shipping</strong></p>
+            <div class="shipping d-flex flex-row gap-3 p">
+              <input type="radio" name="" id="" checked />
+              <p class="mt-3">Canada post (2 weeks)</p>
+              <p class="mt-3 ms-auto">12$</p>
+            </div>
+          </div>
+          <div class="payment d-flex flex-column">
+            <p><strong> Payment</strong></p>
+            <div class="paypal d-flex flex-row gap-3 p">
+              <input type="radio" name="" id="" checked />
+              <p class="mt-3">Paypal</p>
+              <img
+                class="ms-auto"
+                src="../../assets/img/PayPal.svg"
+                alt="payment"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="order-cart flex-item">
+    <app-order-cart></app-order-cart>
+  </div>
+</div>

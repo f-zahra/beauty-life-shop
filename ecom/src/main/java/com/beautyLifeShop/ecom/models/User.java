@@ -1,6 +1,8 @@
 package com.beautyLifeShop.ecom.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -24,31 +26,45 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private  String username;
+
     private String password;
 
     private String firstname;
     private String lastname;
+    @Column(unique = true)
     private String email;
+    private int phoneNumber;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Address> addresses = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private UserRole role = UserRole.USER;
     private  boolean locked;
-    private boolean enabled = false;
-    public User(String username, String password, String firstname, String lastname, String email, UserRole role, boolean locked) {
-        this.username = username;
+
+
+
+    public User(Long id, String username, String password, String firstname, String lastname, String email, List<Address> addresses, UserRole role, boolean locked) {
+        this.id = id;
+
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+        this.addresses = addresses;
         this.role = role;
         this.locked = locked;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
        return List.of(new SimpleGrantedAuthority(role.name()));
 
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 
     @Override
@@ -63,11 +79,13 @@ public class User implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     }
+
+
 }

@@ -3,8 +3,11 @@ import { AppComponent } from './app.component';
 import { ShopComponent } from './shop/shop.component';
 import { ProductComponent } from './components/product/product.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { TestComponent } from './test/test.component';
+
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { OrderComponent } from './order/order.component';
+import { LoginComponent } from './login/login.component';
+import { authenticationGuard } from './authentication.guard';
 
 export const routes: Routes = [
   {
@@ -19,8 +22,15 @@ export const routes: Routes = [
     path: 'cart',
     component: ShoppingCartComponent,
   },
+
   {
-    path: 'test',
-    component: TestComponent,
+    path: 'checkout',
+    component: OrderComponent,
+    canActivate: [authenticationGuard],
+  },
+
+  {
+    path: 'login',
+    component: LoginComponent,
   },
 ];

@@ -1,0 +1,62 @@
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.flex-column {
+  flex: 1;
+}
+.flex-item {
+  padding: 10px;
+}
+
+.order-cart {
+  border-left: 1px solid #547290;
+  background-color: aliceblue;
+}
+
+.order-form {
+  margin-left: 10%;
+  margin-right: 5%;
+}
+
+.shipping-form > * {
+  margin-bottom: 5%;
+}
+
+.user-address {
+  background-color: rgb(246, 243, 238);
+  border-radius: 5px;
+}
+
+/* address */
+.defaultAddress {
+  font-size: smaller;
+}
+
+/*payment section*/
+.payment .paypal img {
+  width: 10%;
+}
+.payment .paypal {
+  border: 0.5px solid #becfe0;
+  border-radius: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+@media (max-width: 960px) {
+  .order-container {
+    flex-direction: column;
+  }
+  .order-form {
+    width: auto;
+    margin: 0;
+  }
+  .order-cart {
+    width: auto;
+  }
+
+  .defaultAddress {
+    flex-direction: column;
+  }
+}
