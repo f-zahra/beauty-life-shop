@@ -29,10 +29,11 @@ export class OrderComponent {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    //get user info
     this.userService.getUser().subscribe((data) => {
       this.userData = data;
       this.userAddress = data.addresses[0];
+
+      console.log(data);
     });
   }
 

@@ -15,7 +15,7 @@ export class AuthenticationService {
     this.authToken = token;
   }
 
-  getAuthToken(): string | null {
+  getAuthToken() {
     return this.authToken;
   }
 

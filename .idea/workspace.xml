@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="e1cd9106-6334-458c-a1ee-cdb2910a36b1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/config/WebSecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/config/WebSecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/models/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/models/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beautyLifeEcommerceAngular/angular-beauty-life-shop/src/app/order/order.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/beautyLifeEcommerceAngular/angular-beauty-life-shop/src/app/order/order.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beautyLifeEcommerceAngular/angular-beauty-life-shop/src/app/services/auth-interceptor.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/beautyLifeEcommerceAngular/angular-beauty-life-shop/src/app/services/auth-interceptor.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beautyLifeEcommerceAngular/angular-beauty-life-shop/src/app/services/authentication.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/beautyLifeEcommerceAngular/angular-beauty-life-shop/src/app/services/authentication.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beautyLifeEcommerceAngular/angular-beauty-life-shop/src/app/services/cart.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/beautyLifeEcommerceAngular/angular-beauty-life-shop/src/app/services/cart.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/beautyLifeEcommerceAngular/angular-beauty-life-shop/src/app/services/products.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/beautyLifeEcommerceAngular/angular-beauty-life-shop/src/app/services/products.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/EcomApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/EcomApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/repository/OrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ecom/src/main/java/com/beautyLifeShop/ecom/repository/OrderRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,10 +25,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2eQ3pUf98pbrEHVdM9J2xmiy5r3" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -33,10 +38,17 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "development",
+    "git-widget-placeholder": "user-registration",
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

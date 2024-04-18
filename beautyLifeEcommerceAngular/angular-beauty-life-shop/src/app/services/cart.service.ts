@@ -12,19 +12,19 @@ export class CartService {
 
   constructor(private http: HttpClient) {}
 
-  getShoppingCart(): Observable<ShoppingCart> {
+  getShoppingCart() {
     return this.http.get<ShoppingCart>(this.apiUrl, {
       withCredentials: true,
     });
   }
 
-  getCartItems(): Observable<ShoppingCartItem[]> {
+  getCartItems() {
     return this.http.get<ShoppingCartItem[]>(this.apiUrl + '/cartItems', {
       withCredentials: true,
     });
   }
 
-  addItemToCart(productId: number): Observable<string> {
+  addItemToCart(productId: number) {
     return this.http.post<string>(
       `${this.apiUrl}/add?productId=${productId}`,
       null,
