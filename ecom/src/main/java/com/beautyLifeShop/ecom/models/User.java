@@ -35,12 +35,12 @@ public class User implements UserDetails {
     private int phoneNumber;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Address> addresses;
+    private List<Address> addresses = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private UserRole role = UserRole.USER;
     private  boolean locked;
-    private boolean enabled = false;
+
 
 
     public User(Long id, String username, String password, String firstname, String lastname, String email, List<Address> addresses, UserRole role, boolean locked) {
@@ -73,11 +73,13 @@ public class User implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     }
+
+
 }

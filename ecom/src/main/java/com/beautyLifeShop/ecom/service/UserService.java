@@ -1,8 +1,12 @@
 package com.beautyLifeShop.ecom.service;
 
+
+import com.beautyLifeShop.ecom.config.Encoder;
 import com.beautyLifeShop.ecom.models.User;
+import com.beautyLifeShop.ecom.models.UserRequest;
 import com.beautyLifeShop.ecom.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,14 +18,25 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService implements  UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private Encoder passwordEncoder;
+    public User registerNewUser(UserRequest user) {
+        User newUser = new User();
+        newUser.setFirstname(user.getFirstName());
+        newUser.setLastname(user.getLastName());
+        newUser.setEmail(user.getEmail());
 
-    public User registerNewUser(User user) {
-        return userRepository.save(user);
+        //encode the password before save
+        String encoded_password = passwordEncoder.passwordEncoder().encode(user.getPassword());
+        newUser.setPassword(encoded_password);
+        newUser.getAddresses().add(user.getAddress());
+        return userRepository.save(newUser);
     }
 
     public Optional<User> getUser() {

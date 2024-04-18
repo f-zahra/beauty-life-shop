@@ -17,5 +17,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Override
     Optional<Order> findById(Long Long);
 
-    //boolean existsByShoppingCart(ShoppingCart shoppingCart);
 }

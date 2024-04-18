@@ -1,6 +1,7 @@
 package com.beautyLifeShop.ecom.controllers;
 
 import com.beautyLifeShop.ecom.models.User;
+import com.beautyLifeShop.ecom.models.UserRequest;
 import com.beautyLifeShop.ecom.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("api/user-registration")
-    public User registerNewUser(@RequestBody User user){
-     return userService.registerNewUser(user);
+
+    @PostMapping("api/register/user")
+    public User createUser(@RequestBody UserRequest user) {
+
+
+        return userService.registerNewUser(user);
     }
 
     @GetMapping("api/user")
