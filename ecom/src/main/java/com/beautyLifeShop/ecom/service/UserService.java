@@ -26,17 +26,20 @@ public class UserService implements  UserDetailsService {
 
     @Autowired
     private Encoder passwordEncoder;
-    public User registerNewUser(UserRequest user) {
-        User newUser = new User();
-        newUser.setFirstname(user.getFirstName());
-        newUser.setLastname(user.getLastName());
-        newUser.setEmail(user.getEmail());
+    public User registerNewUser(UserRequest user) throws RuntimeException {
 
-        //encode the password before save
-        String encoded_password = passwordEncoder.passwordEncoder().encode(user.getPassword());
-        newUser.setPassword(encoded_password);
-        newUser.getAddresses().add(user.getAddress());
-        return userRepository.save(newUser);
+           User newUser = new User();
+           newUser.setFirstname(user.getFirstName());
+           newUser.setLastname(user.getLastName());
+           newUser.setEmail(user.getEmail());
+
+           //encode the password before save
+           String encoded_password = passwordEncoder.passwordEncoder().encode(user.getPassword());
+           newUser.setPassword(encoded_password);
+           newUser.getAddresses().add(user.getAddress());
+           return userRepository.save(newUser);
+
+
     }
 
     public Optional<User> getUser() {
