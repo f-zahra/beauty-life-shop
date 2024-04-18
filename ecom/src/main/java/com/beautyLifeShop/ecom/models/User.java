@@ -26,11 +26,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private  String username;
+
     private String password;
 
     private String firstname;
     private String lastname;
+    @Column(unique = true)
     private String email;
     private int phoneNumber;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -45,7 +46,7 @@ public class User implements UserDetails {
 
     public User(Long id, String username, String password, String firstname, String lastname, String email, List<Address> addresses, UserRole role, boolean locked) {
         this.id = id;
-        this.username = username;
+
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -59,6 +60,11 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
        return List.of(new SimpleGrantedAuthority(role.name()));
 
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 
     @Override
