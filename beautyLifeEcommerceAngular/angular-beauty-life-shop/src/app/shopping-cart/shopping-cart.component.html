@@ -16,15 +16,11 @@
         <tbody>
           <tr *ngFor="let item of items">
             <td class="cart-info">
-              <div class="cart-info-details d-flex gap-3">
-                <img src="../assets/img/{{ item.product.url }}" alt="" />
+              <div class="cart-info-details d-flex">
+                <img [src]="item.product.url" alt="" />
                 <div class="item-details d-flex flex-column align-items-start">
                   <p>
-                    <strong
-                      ><a href="/products/{{ item.product.id }}">{{
-                        item.product.name
-                      }}</a></strong
-                    >
+                    <strong>{{ item.product.name }}</strong>
                   </p>
                   <p>
                     <small>{{ item.product.description }}</small>
@@ -35,25 +31,16 @@
             <td>{{ item.product.price }}$</td>
             <td>
               <div class="input-group quantity-selector d-flex flex-row">
-                <div class="d-flex flex-row me-3">
-                  <button (click)="decrementQuatity(item.product.id)">-</button>
-                  <input
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    min="1"
-                    max="5"
-                    class="p-1"
-                    [value]="item.quantity"
-                    readonly
-                  />
-                  <button (click)="increment(item.product.id)">+</button>
-                </div>
-                <button
-                  type="button"
-                  class="trash-btn"
-                  (click)="removeItem(item.itemId)"
-                >
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  min="1"
+                  max="5"
+                  class="me-2 p-1"
+                  [value]="item.quantity"
+                />
+                <button type="button" class="trash-btn">
                   <i class="fas fa-trash"></i>
                 </button>
               </div>
@@ -65,13 +52,13 @@
     </div>
     <div class="subtotal">
       <h1 class="lead">
-        <strong>Subtotal {{ cart.total }} $CAD</strong>
+        <strong>Subtotal {{ getSubtotal() }}$CAD</strong>
       </h1>
 
       <p class="lead">Taxes and shipping calculated at checkout</p>
     </div>
     <div class="checkout-button">
-      <button (click)="navigateToOrder()" class="popup-button">
+      <button class="popup-button">
         <i class="me-2 fas fa-lock"></i>checkout
       </button>
     </div>

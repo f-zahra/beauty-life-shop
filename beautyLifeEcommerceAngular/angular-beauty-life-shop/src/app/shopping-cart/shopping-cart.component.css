@@ -22,11 +22,8 @@ td {
   width: 100px;
 }
 
-.cart-info-details a {
-  text-decoration: none;
-}
-
-.cart-info .trash-btn {
+.trash-btn {
+  border: none;
   background: transparent;
 }
 

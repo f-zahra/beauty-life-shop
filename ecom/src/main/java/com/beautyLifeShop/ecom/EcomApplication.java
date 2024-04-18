@@ -9,9 +9,12 @@ public class EcomApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EcomApplication.class, args);
+		String passwordToEncode = "myPassword123";
 
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedPassword = passwordEncoder.encode(passwordToEncode);
 
-
+		System.out.println("Encoded password: " + encodedPassword);
 	}
 
 }

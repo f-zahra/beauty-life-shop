@@ -2,19 +2,19 @@
 <div class="product-details-container">
   <div class="detail">
     <div class="image d-flex flex-column gap">
-      <img src="../assets/img/{{ productData.url }}" alt="image" />
+      <img [src]="productData.url" alt="" />
       <div class="other-images d-flex align-items-center">
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="image" />
+          <img *ngIf="productData" [src]="productData.url" alt="" />
         </div>
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="images" />
+          <img *ngIf="productData" [src]="productData.url" alt="" />
         </div>
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="images" />
+          <img *ngIf="productData" [src]="productData.url" alt="" />
         </div>
         <div class="">
-          <img *ngIf="productData" [src]="productData.url" alt="images" />
+          <img *ngIf="productData" [src]="productData.url" alt="" />
         </div>
       </div>
     </div>
@@ -22,20 +22,18 @@
     <div class="content">
       <h6 class="name" *ngIf="productData">{{ productData.name }}</h6>
       <div class="rating">
-        <ng-container *ngIf="productData.rating; else noReview">
-          <p-rating
-            [(ngModel)]="productData.rating"
-            [readonly]="true"
-            [cancel]="false"
-          ></p-rating>
-        </ng-container>
-        <ng-template #noReview>
-          <p class="text-muted">No review</p>
-        </ng-template>
+        <p-rating
+          *ngIf="productData"
+          [(ngModel)]="productData.rating"
+          [readonly]="true"
+          [cancel]="false"
+        ></p-rating>
         <span class="ratingNumber">{{ productData.rating }}</span>
       </div>
       <div class="price" *ngIf="productData">{{ productData.price }}$</div>
-      <app-add-to-cart-button [productId]="productId"></app-add-to-cart-button>
+      <div class="buttons">
+        <button>Add to Cart</button>
+      </div>
       <div class="description" *ngIf="productData">
         {{ productData.description }}
       </div>

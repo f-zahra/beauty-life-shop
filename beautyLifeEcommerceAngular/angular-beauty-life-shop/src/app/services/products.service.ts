@@ -1,21 +1,28 @@
 import { Injectable } from '@angular/core';
+import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { Product } from '../types';
-import { HttpClient } from '@angular/common/http';
+import { PaginationParams, Products, Product } from '../types';
+import { HttpClientModule } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductsService {
-  private apiUrl = 'http://localhost:8080/api/products';
+  constructor(private apiService: ApiService) {}
 
-  constructor(private http: HttpClient) {}
+  getProducts = (
+    url: string,
+    params: PaginationParams
+  ): Observable<Products> => {
+    return this.apiService.get(url, {
+      params,
+      responseType: 'json',
+    });
+  };
 
-  getProductById(id: number): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`);
-  }
-
-  getAllProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl);
-  }
+  getProductbyId = (url: string): Observable<Product> => {
+    return this.apiService.get(url, {
+      responseType: 'json',
+    });
+  };
 }

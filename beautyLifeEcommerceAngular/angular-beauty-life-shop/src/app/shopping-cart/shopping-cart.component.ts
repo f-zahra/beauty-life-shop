@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CartService } from '../services/cart.service';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ShoppingCart, ShoppingCartItem, Product } from '../types';
 
@@ -12,44 +11,24 @@ import { ShoppingCart, ShoppingCartItem, Product } from '../types';
   styleUrl: './shopping-cart.component.css',
 })
 export class ShoppingCartComponent {
-  items!: ShoppingCartItem[];
-  cart!: ShoppingCart;
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(private cartService: CartService) {}
 
   @Output() cartItemsChange = new EventEmitter<ShoppingCart[]>();
+  items?: ShoppingCartItem[];
 
   ngOnInit(): void {
-    this.getCart();
+    this.cartService
+      .getCartItems('http://localhost:3000/cart')
+      .subscribe((data: ShoppingCart) => {
+        this.items = data.items;
+        console.log(data.items);
+      });
   }
 
-  navigateToOrder(): void {
-    this.router.navigate(['/checkout']);
-  }
-
-  getCart(): void {
-    this.cartService.getShoppingCart().subscribe((data) => {
-      this.items = data.cartItems;
-      this.cart = data;
-      console.log(this.items);
-      console.log(data);
-    });
-  }
-
-  increment(id: number) {
-    this.cartService.addItemToCart(id).subscribe(() => {
-      this.getCart();
-    });
-  }
-
-  removeItem(cartId: String) {
-    console.log(cartId);
-    this.cartService.removeitemFromCart(cartId).subscribe(() => {
-      this.getCart();
-    });
-  }
-  decrementQuatity(id: number) {
-    this.cartService.decrementItem(id).subscribe(() => {
-      this.getCart();
-    });
+  getSubtotal(): number {
+    return this.items!.reduce(
+      (total, item) => total + item.quantity * item.product.price,
+      0
+    );
   }
 }

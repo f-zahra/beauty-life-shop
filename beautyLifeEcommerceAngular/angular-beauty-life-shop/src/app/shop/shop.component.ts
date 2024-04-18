@@ -20,13 +20,14 @@ import { RouterOutlet } from '@angular/router';
 })
 export class ShopComponent {
   productList: Product[] = [];
-
   constructor(private productsService: ProductsService) {}
 
   ngOnInit() {
-    this.productsService.getAllProducts().subscribe((products) => {
-      this.productList = products;
-    });
+    this.productsService
+      .getProducts('http://localhost:3000/products', { page: 0, perPage: 5 })
+      .subscribe((products: Products) => {
+        this.productList = products.products;
+      });
   }
 
   onProductOutput(product: Product) {

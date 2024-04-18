@@ -1,26 +1,16 @@
-<div class="card">
-  <img
-    alt="product"
-    src="../assets/img/{{ product.url }}"
-    class="product-image"
-  />
-  <div class="card-content">
-    <h2 class="title">
-      <a href="/products/{{ product.id }}">{{ product.name }}</a>
-    </h2>
-    <ng-container *ngIf="product.rating > 0; else noReview">
-      <p-rating
-        [(ngModel)]="product.rating"
-        [readonly]="true"
-        [cancel]="false"
-      ></p-rating>
-    </ng-container>
-    <ng-template #noReview>
-      <p class="text-muted">No review</p>
-    </ng-template>
-
-    <p class="description">{{ product.description }}</p>
-    <p>{{ product.price }}$</p>
-    <app-add-to-cart-button [productId]="product.id"></app-add-to-cart-button>
-  </div>
+<div class="collection-img">
+  <img alt="product" [src]="product.url" class="product-image" />
+</div>
+<div class="product-details text-center d-flex flex-column">
+  <h2 class="title">
+    <a href="/products/{{ product.id }}">{{ product.name }}</a>
+  </h2>
+  <p-rating
+    [(ngModel)]="product.rating"
+    [readonly]="true"
+    [cancel]="false"
+  ></p-rating>
+  <p class="description">{{ product.description }}</p>
+  <p>{{ product.price }}</p>
+  <button class="add-cart-btn">Add to Cart</button>
 </div>
