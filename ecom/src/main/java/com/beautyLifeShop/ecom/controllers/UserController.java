@@ -52,4 +52,14 @@ public class UserController {
 
     }
 
+    @PutMapping("api/user/update-address")
+    public Address updateAddress(@RequestBody Address address){
+        return  userService.updateAddress(address);
+    }
+
+    @DeleteMapping("api/user/delete-address")
+    public void deleteAddress(@RequestBody Address address){
+          userService.deleteAddress(address);
+    }
+
 }
