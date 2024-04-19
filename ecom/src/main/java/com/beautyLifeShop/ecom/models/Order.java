@@ -29,7 +29,9 @@ public class Order {
     List<OrderItem> items = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.PENDING;
-
+    @ManyToOne
+    @JsonBackReference
+    private User user;
 
 
 

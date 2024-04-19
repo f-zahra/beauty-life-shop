@@ -4,12 +4,15 @@ package com.beautyLifeShop.ecom.service;
 import com.beautyLifeShop.ecom.config.Encoder;
 import com.beautyLifeShop.ecom.config.ExceptionHandler;
 import com.beautyLifeShop.ecom.models.Address;
+import com.beautyLifeShop.ecom.models.Order;
 import com.beautyLifeShop.ecom.models.User;
 import com.beautyLifeShop.ecom.models.UserRequest;
 import com.beautyLifeShop.ecom.repository.AddressRepository;
+import com.beautyLifeShop.ecom.repository.OrderRepository;
 import com.beautyLifeShop.ecom.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.security.core.Authentication;
@@ -18,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +35,9 @@ public class UserService implements  UserDetailsService {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Autowired
     private Encoder passwordEncoder;
@@ -132,4 +139,14 @@ public class UserService implements  UserDetailsService {
     }
 
 
+
+    public List<Order> getUserOrders(Long userId) throws ExceptionHandler{
+        List<Order> order =  orderRepository.findByUserId(userId);
+        if(!order.isEmpty())
+            return order;
+           else
+        { throw new RuntimeException("no order found");}
+
+
+    }
 }

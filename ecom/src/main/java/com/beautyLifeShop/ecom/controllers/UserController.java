@@ -2,6 +2,7 @@ package com.beautyLifeShop.ecom.controllers;
 
 import com.beautyLifeShop.ecom.models.Address;
 import com.beautyLifeShop.ecom.models.User;
+import com.beautyLifeShop.ecom.models.Order;
 import com.beautyLifeShop.ecom.models.UserRequest;
 import com.beautyLifeShop.ecom.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,4 +63,10 @@ public class UserController {
           userService.deleteAddress(address);
     }
 
+
+    //get user order
+    @GetMapping("/api/user/order")
+    public List<Order> getUserOrders(@RequestParam Long userId){
+        return userService.getUserOrders(userId);
+    }
 }

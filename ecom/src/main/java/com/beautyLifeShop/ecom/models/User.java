@@ -26,10 +26,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
-    private String password;
-
-    private String firstname;
+private String password;
+ private String firstname;
     private String lastname;
     @Column(unique = true)
     private String email;
@@ -37,6 +35,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Address> addresses = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Order> orders = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.USER;

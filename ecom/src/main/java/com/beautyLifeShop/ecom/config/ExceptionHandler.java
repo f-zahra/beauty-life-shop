@@ -15,7 +15,7 @@ public class ExceptionHandler extends RuntimeException{
     @org.springframework.web.bind.annotation.ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleCustomException(RuntimeException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("failed : " + ex.getMessage());
+                .body(ex.getMessage());
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(DataIntegrityViolationException.class)
