@@ -2,9 +2,11 @@ package com.beautyLifeShop.ecom.service;
 
 
 import com.beautyLifeShop.ecom.config.Encoder;
+import com.beautyLifeShop.ecom.config.ExceptionHandler;
 import com.beautyLifeShop.ecom.models.Address;
 import com.beautyLifeShop.ecom.models.User;
 import com.beautyLifeShop.ecom.models.UserRequest;
+import com.beautyLifeShop.ecom.repository.AddressRepository;
 import com.beautyLifeShop.ecom.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -27,6 +29,9 @@ public class UserService implements  UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
     private Encoder passwordEncoder;
     public User registerNewUser(UserRequest user) throws RuntimeException {
 
@@ -47,24 +52,37 @@ public class UserService implements  UserDetailsService {
 
     public List<Address> getAddress() {
         //get user
-        User user = this.getUser().get();
+        User user = this.getUser();
          return user.getAddresses();
 
 
     }
-    public Optional<User> getUser() {
+    public User getUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         Optional<User> userOptional = userRepository.findByEmail(email);
-        if(userOptional.isPresent()){
-            return Optional.of(userOptional.get());
+        if(userOptional.isEmpty()) {
 
-        }else  return Optional.ofNullable(userOptional.get());
-
+            throw new RuntimeException();
+        }
+        return userOptional.get();
     }
 
 
 
+    public Address addAddress(Address address) throws ExceptionHandler {
+
+        //verify if user has already an address
+        User user = this.getUser();
+        boolean userAlreadyHasAnAddress = !user.getAddresses().isEmpty();
+        if(userAlreadyHasAnAddress){
+            address.setDefault(false);
+        }
+
+        address.setUser(this.getUser());
+        return addressRepository.save(address);
+
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -82,4 +100,6 @@ public class UserService implements  UserDetailsService {
         }
         return null;
     }
+
+
 }

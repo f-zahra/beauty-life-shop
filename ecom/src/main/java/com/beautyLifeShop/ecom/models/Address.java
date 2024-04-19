@@ -9,7 +9,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-
 public class Address {
 
     @Id
@@ -19,6 +18,7 @@ public class Address {
     private String street;
     private String city;
     private String state;
+    @Column(unique = true)
     private String postalCode;
     private String country;
     private boolean isDefault= true;

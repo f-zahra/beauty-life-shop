@@ -22,7 +22,9 @@ public class UserController {
     private UserService userService;
 
 
-    @PostMapping("api/register/user")
+
+
+    @PostMapping("api/user/register")
     public User createUser(@RequestBody UserRequest user) {
 
 
@@ -32,9 +34,9 @@ public class UserController {
     @GetMapping("api/user")
     public ResponseEntity<User> getUser() {
 
-        Optional<User> user = userService.getUser();
 
-        return ResponseEntity.ok(user.get());
+
+        return ResponseEntity.ok(userService.getUser());
     }
 
 
@@ -44,5 +46,10 @@ public class UserController {
     }
 
 
+    @PostMapping("api/user/add-address")
+    public Address addAddress(@RequestBody Address address){
+        return userService.addAddress(address);
+
+    }
 
 }
