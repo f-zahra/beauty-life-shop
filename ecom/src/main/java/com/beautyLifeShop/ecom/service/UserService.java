@@ -3,10 +3,7 @@ package com.beautyLifeShop.ecom.service;
 
 import com.beautyLifeShop.ecom.config.Encoder;
 import com.beautyLifeShop.ecom.config.ExceptionHandler;
-import com.beautyLifeShop.ecom.models.Address;
-import com.beautyLifeShop.ecom.models.Order;
-import com.beautyLifeShop.ecom.models.User;
-import com.beautyLifeShop.ecom.models.UserRequest;
+import com.beautyLifeShop.ecom.models.*;
 import com.beautyLifeShop.ecom.repository.AddressRepository;
 import com.beautyLifeShop.ecom.repository.OrderRepository;
 import com.beautyLifeShop.ecom.repository.UserRepository;
@@ -15,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,7 +39,7 @@ public class UserService implements  UserDetailsService {
 
     @Autowired
     private Encoder passwordEncoder;
-    public User registerNewUser(UserRequest user) throws RuntimeException {
+    public User registerNewUser(UserRequest user) {
 
            User newUser = new User();
            newUser.setFirstname(user.getFirstName());
@@ -52,7 +50,13 @@ public class UserService implements  UserDetailsService {
            String encoded_password = passwordEncoder.passwordEncoder().encode(user.getPassword());
            newUser.setPassword(encoded_password);
            newUser.getAddresses().add(user.getAddress());
-           return userRepository.save(newUser);
+
+           Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
+            if(userOptional.isPresent()){
+                throw new RuntimeException("ACCOUNT ALREADY EXIST");
+            }else {
+               return userRepository.save(newUser);
+            }
 
 
     }
@@ -66,14 +70,15 @@ public class UserService implements  UserDetailsService {
 
     }
     public User getUser() {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if(userOptional.isEmpty()) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found for email: " + email));
 
-            throw new RuntimeException();
-        }
-        return userOptional.get();
+
+
+
     }
 
 
@@ -121,10 +126,47 @@ public class UserService implements  UserDetailsService {
         }
 
     }
+
+
+    public List<Order> getUserOrders(Long userId) throws ExceptionHandler{
+
+        List<Order> order =  orderRepository.findByUserId(userId);
+        if(!order.isEmpty())
+            return order;
+           else
+        { throw new RuntimeException("no order found");}
+
+
+    }
+
+    //update user Order ()
+    public Order updateOrder(Order order)throws ExceptionHandler{
+        //find order
+        Optional<Order> orderOptional = orderRepository.findById(order.getOrderId());
+        if(orderOptional.isEmpty()){
+            throw new RuntimeException("order not found");
+
+        }
+        if(!orderOptional.get().getOrderStatus().equals(OrderStatus.PENDING)){
+            throw new RuntimeException("cannot cancel order");
+        }
+
+            else {
+            orderOptional.get().setShippingAddress(order.getShippingAddress());
+            orderOptional.get().setOrderStatus(order.getOrderStatus());
+            return orderRepository.save(orderOptional.get());
+        }
+
+
+}
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByEmail(username);
-        if (user.isPresent()) {
+        if (user.isEmpty()) {
+            return null;
+        }else{
+            //return userdetails
             var userObj = user.get();
             System.out.println(userObj.getPassword());
             UserDetails userDetails = org.springframework.security.core.userdetails.User.builder().username(userObj.getEmail())
@@ -135,18 +177,9 @@ public class UserService implements  UserDetailsService {
 
             return userDetails;
         }
-        return null;
-    }
-
-
-
-    public List<Order> getUserOrders(Long userId) throws ExceptionHandler{
-        List<Order> order =  orderRepository.findByUserId(userId);
-        if(!order.isEmpty())
-            return order;
-           else
-        { throw new RuntimeException("no order found");}
-
 
     }
+
+
+
 }

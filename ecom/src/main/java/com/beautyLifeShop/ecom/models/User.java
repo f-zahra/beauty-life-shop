@@ -43,18 +43,13 @@ private String password;
     private UserRole role = UserRole.USER;
     private  boolean locked;
 
-
-
-    public User(Long id, String username, String password, String firstname, String lastname, String email, List<Address> addresses, UserRole role, boolean locked) {
+    public User(Long id, String password, String firstname, String lastname, String email, int phoneNumber) {
         this.id = id;
-
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-        this.addresses = addresses;
-        this.role = role;
-        this.locked = locked;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override

@@ -69,4 +69,15 @@ public class UserController {
     public List<Order> getUserOrders(@RequestParam Long userId){
         return userService.getUserOrders(userId);
     }
+
+    //update user order
+    @PostMapping("/api/user/update-order")
+    public Order updateOrder(@RequestBody Order order){
+        return userService.updateOrder(order);
+    }
+
+
+
+
+
 }
