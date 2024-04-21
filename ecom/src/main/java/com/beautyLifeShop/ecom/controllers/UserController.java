@@ -53,11 +53,13 @@ public class UserController {
 
     }
 
+    //update address
     @PutMapping("api/user/update-address")
     public Address updateAddress(@RequestBody Address address){
         return  userService.updateAddress(address);
     }
 
+    //delete address
     @DeleteMapping("api/user/delete-address")
     public void deleteAddress(@RequestBody Address address){
           userService.deleteAddress(address);

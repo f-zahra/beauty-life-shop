@@ -74,7 +74,7 @@ public class UserService implements  UserDetailsService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found for email: " + email));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found for this email: " + email));
 
 
 
