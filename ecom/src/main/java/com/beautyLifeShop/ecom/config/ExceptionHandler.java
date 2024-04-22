@@ -18,11 +18,7 @@ public class ExceptionHandler extends RuntimeException{
                 .body(ex.getMessage());
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<String> DataExist(DataIntegrityViolationException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("DATA ALREADY EXIST");
-    }
+
 
 
 

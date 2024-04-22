@@ -17,12 +17,25 @@ public class OrderController {
     private OrderService orderService;
 
 
-    @PostMapping(path="api/place-order")
+    //add
+    @PostMapping(path="api/user/place-order")
     public Order placeOrder(@RequestBody Order order, HttpSession session)
     {
           return orderService.placeOrder(order, session);
 
     }
+
+    //view
+    @GetMapping("api/sales-person/orders")
+    public List<Order> getAllOrders(){
+        return  orderService.getOrders();
+    }
+    //update
+
+
+
+    //delete
+
 
 
 
