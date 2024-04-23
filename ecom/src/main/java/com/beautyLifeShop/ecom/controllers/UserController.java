@@ -32,7 +32,7 @@ public class UserController {
         return userService.registerNewUser(user);
     }
 
-    @GetMapping("api/user")
+    @GetMapping("api/user/user-dashboard")
     public ResponseEntity<User> getUser() {
 
 
@@ -67,17 +67,6 @@ public class UserController {
 
 
     //get user order
-    @GetMapping("/api/user/order")
-    public List<Order> getUserOrders(@RequestParam Long userId){
-        return userService.getUserOrders(userId);
-    }
-
-    //update user order
-    @PostMapping("/api/user/update-order")
-    public Order updateOrder(@RequestBody Order order){
-        return userService.updateOrder(order);
-    }
-
 
 
 

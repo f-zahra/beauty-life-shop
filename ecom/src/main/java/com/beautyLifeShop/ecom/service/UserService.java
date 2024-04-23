@@ -128,37 +128,8 @@ public class UserService implements  UserDetailsService {
     }
 
 
-    public List<Order> getUserOrders(Long userId) throws ExceptionHandler{
-
-        List<Order> order =  orderRepository.findByUserId(userId);
-        if(!order.isEmpty())
-            return order;
-           else
-        { throw new RuntimeException("no order found");}
 
 
-    }
-
-    //update user Order ()
-    public Order updateOrder(Order order)throws ExceptionHandler{
-        //find order
-        Optional<Order> orderOptional = orderRepository.findById(order.getOrderId());
-        if(orderOptional.isEmpty()){
-            throw new RuntimeException("order not found");
-
-        }
-        if(!orderOptional.get().getOrderStatus().equals(OrderStatus.PENDING)){
-            throw new RuntimeException("cannot cancel order");
-        }
-
-            else {
-            orderOptional.get().setShippingAddress(order.getShippingAddress());
-            orderOptional.get().setOrderStatus(order.getOrderStatus());
-            return orderRepository.save(orderOptional.get());
-        }
-
-
-}
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
