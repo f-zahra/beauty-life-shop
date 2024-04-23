@@ -34,7 +34,7 @@ public class OrderService {
 
         ShoppingCart userCart = shoppingCartService.getCart(session);
        //get user
-        User user = userService.getUser();
+        User user = userService.getConnectedUser();
 
        //creating new order items and adding them to order
         if(!userCart.isEmpty()){

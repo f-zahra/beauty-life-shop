@@ -34,11 +34,10 @@ public class UserService implements  UserDetailsService {
     @Autowired
     private AddressRepository addressRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
 
     @Autowired
     private Encoder passwordEncoder;
+    /***********CRUD user*************/
     public User registerNewUser(UserRequest user) {
 
            User newUser = new User();
@@ -62,14 +61,9 @@ public class UserService implements  UserDetailsService {
     }
 
 
-    public List<Address> getAddress() {
-        //get user
-        User user = this.getUser();
-         return user.getAddresses();
 
-
-    }
-    public User getUser() {
+    //get connected user
+    public User getConnectedUser() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -81,18 +75,48 @@ public class UserService implements  UserDetailsService {
 
     }
 
+    public List<User> getAllUser(){
+        return userRepository.findAll();
+    }
+
+    //update connected user
+    public User updateUser(Long userid,UserRequest userRequest) {
+        User user = this.getConnectedUser();
+        user.setFirstname(userRequest.getFirstName());
+        user.setLastname(userRequest.getLastName());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(userRequest.getPassword());
+        user.setPhoneNumber(userRequest.getPhoneNumber());
+        return  userRepository.save(user);
+    }
+
+    //update user
+
+    //get connected user
+
+    public void  deleteUser(User user){
+
+        userRepository.delete(user);
+    }
+
+    /***********CRUD address*************/
+    public List<Address> getAddress() {
+        //get user
+        User user = this.getConnectedUser();
+        return user.getAddresses();
 
 
+    }
     public Address addAddress(Address address) throws ExceptionHandler {
 
         //verify if user has already an address
-        User user = this.getUser();
+        User user = this.getConnectedUser();
         boolean userAlreadyHasAnAddress = !user.getAddresses().isEmpty();
         if(userAlreadyHasAnAddress){
             address.setDefault(false);
         }
 
-        address.setUser(this.getUser());
+        address.setUser(this.getConnectedUser());
         return addressRepository.save(address);
 
     }

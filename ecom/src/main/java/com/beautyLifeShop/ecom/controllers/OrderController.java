@@ -40,7 +40,7 @@ public class OrderController {
 
     @GetMapping("api/user/order-history")
     public List<Order> getUserOrder(){
-        User user = userService.getUser();
+        User user = userService.getConnectedUser();
         return  orderService.getUserOrders(user.getId());
     }
 

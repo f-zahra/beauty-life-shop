@@ -24,7 +24,7 @@ public class UserController {
 
 
 
-
+    /******crud user*******/
     @PostMapping("api/user/register")
     public User createUser(@RequestBody UserRequest user) {
 
@@ -33,40 +33,60 @@ public class UserController {
     }
 
     @GetMapping("api/user/user-dashboard")
-    public ResponseEntity<User> getUser() {
+    public User getUser() {
 
 
 
-        return ResponseEntity.ok(userService.getUser());
+        return userService.getConnectedUser();
     }
 
-
-    @GetMapping("api/user/address-list")
+    @GetMapping({"api/sales-person/users","api/admin/users"})
+    public List<User> getUsers(){
+        return userService.getAllUser();
+    }
+    //update user
+    @PutMapping("api/sales-person/user-dashboard")
+    public User updateUser(@RequestParam Long userId, @RequestBody UserRequest userRequest){
+        return userService.updateUser(userId, userRequest);
+    }
+    @PutMapping({"api/user/update-user"})
+    public User updateAuthenticatedUser(@RequestBody UserRequest userRequest){
+        //get authenticated user
+        User user = userService.getConnectedUser();
+        return userService.updateUser(user.getId(), userRequest);
+    }
+    @DeleteMapping("api/admin/delete-user")
+    public void deleteUser(@RequestBody User user){
+        userService.deleteUser(user);
+    }
+    //delete user
+    /******crud address*******/
+    @GetMapping({"api/user/address-list","api/sales-person/address-list"})
     public List<Address> getAddresses(){
         return userService.getAddress();
     }
 
 
-    @PostMapping("api/user/add-address")
+    @PostMapping({"api/user/add-address","api/sales-person/add-address"})
     public Address addAddress(@RequestBody Address address){
         return userService.addAddress(address);
 
     }
 
     //update address
-    @PutMapping("api/user/update-address")
+    @PutMapping({"api/user/update-address","api/sales-person/update-address"})
     public Address updateAddress(@RequestBody Address address){
         return  userService.updateAddress(address);
     }
 
     //delete address
-    @DeleteMapping("api/user/delete-address")
+    @DeleteMapping({"api/user/delete-address","api/sales-person/delete-address"})
     public void deleteAddress(@RequestBody Address address){
           userService.deleteAddress(address);
     }
 
 
-    //get user order
+
 
 
 
