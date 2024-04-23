@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { OrderCartComponent } from './order-cart/order-cart.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgClass } from '@angular/common';
@@ -25,15 +25,16 @@ export class OrderComponent {
   isFormDisabled: boolean = true;
   userAddress!: Address;
   userData!: User;
-
-  constructor(private userService: UserService) {}
+  @ViewChild('paymentRef', { static: true }) paymentRef!: ElementRef;
+  constructor(
+    private userService: UserService,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit(): void {
     this.userService.getUser().subscribe((data) => {
       this.userData = data;
       this.userAddress = data.addresses[0];
-
-      console.log(data);
     });
   }
 
@@ -46,5 +47,19 @@ export class OrderComponent {
   onSubmit(form: NgForm) {
     const isFormValid = form.form.valid;
     this.isFormSubmited = true;
+  }
+
+  //pay order
+
+  payOrder() {
+    this.orderService.payOrder().subscribe(
+      (response) => {
+        window.location.href = response;
+      },
+      (error) => {
+        console.error('Error initiating payment:', error);
+        // Handle error
+      }
+    );
   }
 }

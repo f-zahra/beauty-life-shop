@@ -18,11 +18,10 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                registry.addMapping("/**")
-                       .allowedOrigins("http://localhost:4200/")
+                       .allowedOrigins("http://localhost:4200/"," https://www.sandbox.paypal.com/")
                        .allowedMethods(HttpMethod.GET.name(),
-                               HttpMethod.POST.name(),HttpMethod.PUT.name(), HttpMethod.OPTIONS.name() )
-                       .allowedHeaders(HttpHeaders.CONTENT_TYPE,
-                               HttpHeaders.AUTHORIZATION).allowCredentials(true);;
+                               HttpMethod.POST.name(),HttpMethod.PUT.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name() )
+                       .allowedHeaders("*").allowCredentials(true);;
             }
         };
     }

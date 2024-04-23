@@ -31,6 +31,9 @@ public class OrderController {
 
     }
 
+
+    //payment
+
     //view
     @GetMapping("api/sales-person/orders")
     public List<Order> getAllOrders(){

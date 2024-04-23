@@ -41,7 +41,7 @@ public class WebSecurityConfiguration {
         httpSecurity.csrf().disable();
             httpSecurity.authorizeHttpRequests(registry ->
                     registry.requestMatchers("/api/products/**", "/images/**","api/login","api/home","api/cart/**"
-
+                                ,"/payment/create"
                             )
                             .permitAll());
 
