@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ShoppingCart } from '../../types';
 import { CartService } from '../../services/cart.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-order-cart',
   standalone: true,
@@ -13,12 +12,16 @@ import { CartService } from '../../services/cart.service';
 export class OrderCartComponent {
   cart!: ShoppingCart;
   @Input() shippingCost!: number;
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
     this.cartService.getShoppingCart().subscribe((data: ShoppingCart) => {
       this.cart = data;
       console.log(this.cart);
     });
+  }
+
+  placeOrder() {
+    this.router.navigateByUrl('/payment');
   }
 }

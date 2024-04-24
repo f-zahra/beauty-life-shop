@@ -8,6 +8,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { OrderComponent } from './order/order.component';
 import { LoginComponent } from './login/login.component';
 import { authenticationGuard } from './authentication.guard';
+import { PaymentComponent } from './order/payment/payment.component';
 
 export const routes: Routes = [
   {
