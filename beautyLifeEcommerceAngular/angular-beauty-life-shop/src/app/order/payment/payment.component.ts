@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ShoppingCart, Address } from '../../types';
+import { ShoppingCart, Address, Order } from '../../types';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-payment',
@@ -12,7 +13,7 @@ export class PaymentComponent implements OnInit {
   @ViewChild('paypal', { static: true }) paypalElement!: ElementRef;
   @Input() cart!: ShoppingCart;
   @Input() shippingAddress!: Address;
-
+  userOrder!: Order;
   payeeEmail: string = ''; // Merchant Account to credit the charge Amount
   paidFor: boolean = false; // Payment Successful Message handling
 
@@ -47,12 +48,28 @@ export class PaymentComponent implements OnInit {
       const order = await actions.order.capture();
       this.paidFor = true;
       console.log(order);
+
+      //set order fields
+
+      this.userOrder = {
+        orderDate: order.create_time,
+        shippingAddress: this.shippingAddress,
+      };
+      this.orderService.placeOrder(this.userOrder).subscribe(
+        () => {
+          console.log('Order placed successfully!');
+        },
+        (error) => {
+          console.error('Error placing order:', error);
+        }
+      );
       //TODO redirect to order list
     },
     onError: (err: any) => {
       console.log(err);
     },
   };
+  constructor(private orderService: OrderService) {}
   ngOnInit(): void {
     console.log(this.cart);
     paypal.Buttons(this.paypalConfig).render(this.paypalElement.nativeElement);

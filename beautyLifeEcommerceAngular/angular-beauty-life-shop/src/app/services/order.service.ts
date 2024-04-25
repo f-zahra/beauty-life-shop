@@ -7,7 +7,7 @@ import { Order } from '../types';
   providedIn: 'root',
 })
 export class OrderService {
-  private apiUrl = 'http://localhost:8080/api/place-order';
+  private apiUrl = 'http://localhost:8080/api/user/place-order';
   constructor(private http: HttpClient) {}
 
   placeOrder(order: Order): Observable<Order> {

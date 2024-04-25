@@ -29,7 +29,6 @@ export class OrderComponent {
   userAddressList!: Address[];
   userData!: User;
   cartData!: ShoppingCart;
-  userShippingAddress!: Address;
 
   selectedAddress!: Address;
   constructor(
