@@ -21,14 +21,6 @@
                 [checked]="userAddress === selectedAddress"
               />
               <div class="d-flex flex-column">
-                <div class="d-flex flex-row gap-1">
-                  <strong>
-                    <span>{{ userData.firstname }}</span></strong
-                  >
-                  <strong
-                    ><span>{{ userData.lastname }}</span></strong
-                  >
-                </div>
                 <div class="defaultAddress flex-grow-1 d-flex gap-1">
                   <span>{{ userAddress.street }},</span>
                   <span>{{ userAddress.city }},</span>
@@ -36,6 +28,7 @@
                   <span>{{ userAddress.state }},</span>
                   <span>{{ userAddress.postalCode }},</span>
                   <span>| {{ userData.phoneNumber }}</span>
+                  <span *ngIf="userAddress.default">| (default)</span>
                 </div>
               </div>
             </div>
