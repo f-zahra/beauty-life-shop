@@ -3,6 +3,7 @@ package com.beautyLifeShop.ecom.service;
 
 import com.beautyLifeShop.ecom.config.ExceptionHandler;
 import com.beautyLifeShop.ecom.models.*;
+import com.beautyLifeShop.ecom.repository.AddressRepository;
 import com.beautyLifeShop.ecom.repository.OrderRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class OrderService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AddressRepository addressRepository;
 
 
     /*add*/
@@ -64,8 +67,8 @@ public class OrderService {
     /*read*/
     //get all
     public List<Order> getOrders() throws ExceptionHandler {
-
-      return orderRepository.findAll();
+        List<Order> foundOrders = orderRepository.findAllOrders();
+      return  foundOrders;
     }
     //get  order by id
     public  Order getOrder(Long id){
@@ -89,17 +92,29 @@ public class OrderService {
     *  user can update shipping address, cancel order
     * SP can shipping address, update order status
     * */
-    public Order updateOrder(Long id, OrderRequest orderRequest)throws ExceptionHandler{
+    public int updateOrder(Long id, OrderRequest orderRequest)throws ExceptionHandler{
         //find order
-       Order orderFound = this.getOrder(id);
-       orderFound.setShippingAddress(orderRequest.getShippingAddress());
-       //user can only cancel order
-       if(orderFound.getUser().getAuthorities().equals("ROLE_USER")){
-           orderFound.setOrderStatus(OrderStatus.CANCELED);
-       }else { orderFound.setOrderStatus(orderRequest.getOrderStatus());}
-       orderFound.setOrderStatus(orderRequest.getOrderStatus());
-       return orderRepository.save(orderFound);
+        // Retrieve the existing order
+        Order orderFound = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+       UserRole user_role = orderFound.getUser().getRole();
+        //get address
 
+       //user can only cancel order
+       if(user_role.equals(UserRole.USER)){
+          orderRequest.setOrderStatus(OrderStatus.CANCELED);
+       }
+
+       int updateCount =   orderRepository.updateOrder(
+                id,
+                orderRequest.getOrderStatus(),
+                orderRequest.getShippingAddress().getId()
+        );
+        if (updateCount == 0) {
+            throw new RuntimeException("Order update failed");
+        }
+
+        return updateCount;
     }
 
 

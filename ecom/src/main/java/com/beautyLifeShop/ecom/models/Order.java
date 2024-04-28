@@ -30,7 +30,6 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.PENDING;
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "user_id")
     private User user;
 

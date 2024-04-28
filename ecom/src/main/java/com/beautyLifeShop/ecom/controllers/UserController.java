@@ -26,17 +26,15 @@ public class UserController {
 
     /******crud user*******/
     @PostMapping("api/user/register")
-    public User createUser(@RequestBody UserRequest user) {
+    public ResponseEntity<String> createUser(@RequestBody UserRequest user) {
 
 
-        return userService.registerNewUser(user);
+        userService.registerNewUser(user);
+        return ResponseEntity.ok("user registered");
     }
 
     @GetMapping("api/user/user-dashboard")
     public User getUser() {
-
-
-
         return userService.getConnectedUser();
     }
 
@@ -45,9 +43,16 @@ public class UserController {
         return userService.getAllUser();
     }
     //update user
-    @PutMapping("api/sales-person/user-dashboard")
-    public User updateUser(@RequestParam Long userId, @RequestBody UserRequest userRequest){
-        return userService.updateUser(userId, userRequest);
+    @PutMapping({"api/sales-person/update-user"})
+    public ResponseEntity<String> updateUser(@RequestParam Long userId, @RequestBody UserRequest user){
+        userService.updateUser(userId, user);
+        return ResponseEntity.ok("user updated");
+    }
+
+    @PutMapping({"api/admin/update-user"})
+    public ResponseEntity<String> updateClient(@RequestParam Long userId, @RequestBody UserRequest user){
+        userService.updateClient(userId, user);
+        return ResponseEntity.ok("user updated");
     }
     @PutMapping({"api/user/update-user"})
     public User updateAuthenticatedUser(@RequestBody UserRequest userRequest){
@@ -56,8 +61,10 @@ public class UserController {
         return userService.updateUser(user.getId(), userRequest);
     }
     @DeleteMapping("api/admin/delete-user")
-    public void deleteUser(@RequestBody User user){
+    public ResponseEntity<String> deleteUser(@RequestBody User user){
+
         userService.deleteUser(user);
+        return ResponseEntity.ok("userdeleted");
     }
     //delete user
     /******crud address*******/
@@ -68,8 +75,9 @@ public class UserController {
 
 
     @PostMapping({"api/user/add-address","api/sales-person/add-address"})
-    public Address addAddress(@RequestBody Address address){
-        return userService.addAddress(address);
+    public ResponseEntity<String> addAddress(@RequestBody Address address){
+       userService.addAddress(address);
+       return ResponseEntity.ok("address was added");
 
     }
 

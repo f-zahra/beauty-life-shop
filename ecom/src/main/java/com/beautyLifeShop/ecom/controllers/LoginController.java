@@ -2,8 +2,10 @@ package com.beautyLifeShop.ecom.controllers;
 
 
 import com.beautyLifeShop.ecom.config.TokenGenerator;
+import com.beautyLifeShop.ecom.config.TokenService;
 import com.beautyLifeShop.ecom.models.LoginRequest;
 import com.beautyLifeShop.ecom.models.ResponseRequest;
+import com.beautyLifeShop.ecom.models.Token;
 import com.beautyLifeShop.ecom.models.User;
 import com.beautyLifeShop.ecom.repository.UserRepository;
 import com.beautyLifeShop.ecom.service.UserService;
@@ -17,6 +19,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
+@Controller
 public class LoginController {
 
     @Autowired
@@ -34,9 +39,33 @@ public class LoginController {
     @Autowired
     private HttpSession httpSession;
 
+    @Autowired
+    private TokenService tokenService;
+   /* @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()
+                    )
+            );
 
-    @PostMapping("api/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+            UserDetails userDetails = userService.loadUserByUsername(loginRequest.getUsername());
+            if (userDetails == null) {
+                throw new UsernameNotFoundException("User not found");
+            }
+
+            // Proceed with further logic
+            return ResponseEntity.ok("Success");
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(401).body("Unauthorized");
+        }
+    }
+*/
+
+    @PostMapping("/api/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
 
 
         try {
@@ -47,18 +76,40 @@ public class LoginController {
             httpSession.setAttribute("user", userDetails); // Store user in session
 
 
-            // Generate token (You can use any token generation mechanism here)
-            String token = TokenGenerator.generateToken();
+            // Generate token only if not already generated or if a new session is needed
+            String token = (String) httpSession.getAttribute("token");
+            if (token == null) {
+                token = TokenGenerator.generateToken();
+                // Store the token in the TokenService
+                tokenService.storeToken(token, userDetails);
+                httpSession.setAttribute("token", token);
+            }
 
-
-            // Return token in response
-            Map<String, Object> response = new HashMap<>();
-            response.put("token", token);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(token);
         } catch (AuthenticationException e) {
             throw new RuntimeException(e);
         }
 
     }
 
+    @PostMapping("/api/logout")
+    public ResponseEntity<Map<String, String>>logout(){
+        String token = (String) httpSession.getAttribute("token");
+
+        if (token != null) {
+            // Remove the token from the TokenService
+            tokenService.removeToken(token); // Implement removeToken in TokenService
+
+            // Clear the session attributes
+            httpSession.invalidate(); // Invalidate the entire session
+        }
+
+        // Clear the security context
+        SecurityContextHolder.clearContext(); // Clear the Spring Security context
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Logout successful");
+
+        return ResponseEntity.ok(response);
+
+    }
 }

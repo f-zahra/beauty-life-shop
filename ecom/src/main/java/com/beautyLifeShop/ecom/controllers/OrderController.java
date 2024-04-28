@@ -47,9 +47,10 @@ public class OrderController {
 
     //update  order
     @PutMapping({"/api/user/update-order", "/api/sales-person/update-order"})
-    public Order updateOrder(@RequestParam Long orderId, @RequestBody OrderRequest orderRequest){
+    public ResponseEntity<String> updateOrder(@RequestParam Long orderId, @RequestBody OrderRequest orderRequest){
 
-        return orderService.updateOrder(orderId, orderRequest);
+        orderService.updateOrder(orderId, orderRequest);
+        return ResponseEntity.ok("order updated");
     }
 
 

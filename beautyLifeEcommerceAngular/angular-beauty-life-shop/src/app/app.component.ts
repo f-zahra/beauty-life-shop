@@ -3,9 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ProductsService } from './services/products.service';
-import { Product, Products } from './types';
-import { FormsModule } from '@angular/forms';
+
+import { FormGroup, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',

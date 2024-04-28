@@ -8,16 +8,12 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 
-import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { demoInterceptor } from './demo.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    provideHttpClient(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true,
-    },
+    provideHttpClient(withInterceptors([demoInterceptor])),
   ],
 };

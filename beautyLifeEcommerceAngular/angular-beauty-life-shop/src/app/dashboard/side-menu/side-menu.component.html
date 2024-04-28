@@ -1,0 +1,22 @@
+<div>
+  <ul class="nav nav-tabs flex-column">
+    <li class="nav-item">
+      <a class="nav-link" (click)="openTab('UserinfoTab')">User Info</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="openTab('UserAddressTab')">Addresses</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="openTab('UserOrderTab')">Order History</a>
+    </li>
+    <li class="nav-link" *ngIf="userRole === 'ADMIN'">
+      <a href="/admin-dashboard">admin dashboard</a>
+    </li>
+    <li class="nav-link" *ngIf="userRole === 'SALESPERSON'">
+      <a href="/sales-dashboard">salesperson dashboard</a>
+    </li>
+    <li>
+      <button (click)="logout()">logout</button>
+    </li>
+  </ul>
+</div>

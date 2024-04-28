@@ -30,19 +30,19 @@ private String password;
     private String lastname;
     @Column(unique = true)
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Address> addresses = new ArrayList<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+   /* @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Order> orders = new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();*/
 
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.USER;
     private  boolean locked;
 
-    public User(Long id, String password, String firstname, String lastname, String email, int phoneNumber) {
+    public User(Long id, String password, String firstname, String lastname, String email, String phoneNumber) {
         this.id = id;
         this.password = password;
         this.firstname = firstname;

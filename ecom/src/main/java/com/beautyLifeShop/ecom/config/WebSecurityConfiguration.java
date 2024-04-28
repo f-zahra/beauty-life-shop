@@ -33,24 +33,29 @@ public class WebSecurityConfiguration {
 
     @Autowired
     private Encoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationConfiguration authenticationConfiguration;
+    @Autowired
+    private TokenService tokenService;
     //customize the filter
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
 
-        httpSecurity.csrf().disable();
-            httpSecurity.authorizeHttpRequests(registry ->
-                    registry.requestMatchers("/api/products/**", "/images/**","api/login","api/home","api/cart/**"
+        httpSecurity.csrf().disable()
+                .addFilter(new TokenAuthenticationFilter(this.authenticationManager(authenticationConfiguration), tokenService)); // Add custom filter;
+        httpSecurity.authorizeHttpRequests(registry ->
+                registry.requestMatchers("/api/products/**", "/images/**","/api/login","api/home","api/cart/**", "api/user/register")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
 
-                            )
-                            .permitAll());
+        );
+        httpSecurity.formLogin().disable()/*.defaultSuccessUrl("/api/user/user-dashboard", true)*/;
+        httpSecurity.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // Session creation policy
 
-        httpSecurity
-                .sessionManagement()
-                .sessionFixation()
-                .none();
-        httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
-            httpSecurity.httpBasic();
 
         return httpSecurity.build();
     }

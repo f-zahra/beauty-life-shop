@@ -1,0 +1,208 @@
+<!-- modal -->
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">please confirm your choice</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="cancelOrder(Order)"
+          data-bs-dismiss="modal"
+        >
+          confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end modal -->
+
+<!-- address modal form -->
+<div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New Address</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Form with input fields bound to address object -->
+        <form [formGroup]="addressForm" (ngSubmit)="addAddress()">
+          <!-- Submit handler -->
+          <div>
+            <label for="street">Street</label>
+            <input
+              type="text"
+              id="street"
+              formControlName="street"
+              placeholder="Enter street"
+            />
+          </div>
+          <div>
+            <label for="city">City</label>
+            <input
+              type="text"
+              id="city"
+              formControlName="city"
+              placeholder="Enter city"
+            />
+          </div>
+          <div>
+            <label for="state">State</label>
+            <input
+              type="text"
+              id="state"
+              formControlName="state"
+              placeholder="Enter state"
+            />
+          </div>
+          <div>
+            <label for="postalCode">Postal Code</label>
+            <input
+              type="text"
+              id="postalCode"
+              formControlName="postalCode"
+              placeholder="Enter postal code"
+            />
+          </div>
+          <div>
+            <label for="country">Country</label>
+            <input
+              type="text"
+              id="country"
+              formControlName="country"
+              placeholder="Enter country"
+            />
+          </div>
+
+          <button type="submit" [disabled]="!addressForm.valid">Submit</button>
+          <!-- Submit button -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end address modal form -->
+<div class="d-flex gap-5">
+  <app-side-menu
+    [userRole]="userInfo.role"
+    (tabChanged)="openTab($event)"
+  ></app-side-menu>
+
+  <div class="d-flex flex-column">
+    <div>{{ actionMessage }}</div>
+
+    <div *ngIf="activeTab === 'UserinfoTab'">
+      <h3>User Info</h3>
+      <div *ngIf="userInfo">
+        <p><strong>firstname: </strong>{{ userInfo.firstname }}</p>
+        <p><strong>lastname: </strong>{{ userInfo.lastname }}</p>
+        <p><strong>email: </strong>{{ userInfo.email }}</p>
+        <p><strong>phoneNumber: </strong>{{ userInfo.phoneNumber }}</p>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 'UserAddressTab'">
+      <div
+        class="d-flex flex-column"
+        *ngFor="let Address of userInfo.addresses; let i = index"
+      >
+        <div>
+          <h3>
+            <strong>Address {{ i + 1 }}</strong>
+          </h3>
+        </div>
+        <div class="d-flex flex-row gap-3">
+          <p>{{ Address.street }},</p>
+          <p>{{ Address.city }},</p>
+          <p>{{ Address.state }},</p>
+          <p>{{ Address.country }},</p>
+          <p>{{ Address.postalCode }}</p>
+          <p *ngIf="Address.default">(default )</p>
+          <button href="#" (click)="deleteAddress(Address)">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <div>
+        <a href="" data-bs-toggle="modal" data-bs-target="#addAddressModal"
+          >add address</a
+        >
+      </div>
+    </div>
+    <div *ngIf="activeTab === 'UserOrderTab'">
+      <!-- order history -->
+      <h3><strong>Order history</strong></h3>
+
+      <input
+        type="text"
+        class="form-control search-field"
+        placeholder="search"
+        [(ngModel)]="searchText"
+        name=""
+        id=""
+      />
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="row">Date</th>
+            <th scope="row">status</th>
+            <th scope="row">shipping address</th>
+            <th scope="row">action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let order of orderInfo | searchFilter : searchText;
+              let i = index
+            "
+          >
+            <th scope="row">{{ i + 1 }}</th>
+
+            <td>{{ order.orderDate }}</td>
+            <td>{{ order.orderStatus }}</td>
+            <td>
+              <span>{{ order.shippingAddress.street }},</span>
+              <span>{{ order.shippingAddress.city }},</span>
+              <span>{{ order.shippingAddress.country }},</span>
+              <span>{{ order.shippingAddress.postalCode }}</span>
+            </td>
+            <td class="d-flex gap-3">
+              <button
+                type="button"
+                name="cancelOrder"
+                class="p-1"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModalCenter"
+                (click)="getOrder(order)"
+                [disabled]="order.orderStatus.toString() === 'CANCELED'"
+              >
+                cancel order
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

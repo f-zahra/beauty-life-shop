@@ -44,7 +44,7 @@ public class UserService implements  UserDetailsService {
            newUser.setFirstname(user.getFirstName());
            newUser.setLastname(user.getLastName());
            newUser.setEmail(user.getEmail());
-
+           newUser.setPhoneNumber(user.getPhoneNumber());
            //encode the password before save
            String encoded_password = passwordEncoder.passwordEncoder().encode(user.getPassword());
            newUser.setPassword(encoded_password);
@@ -76,7 +76,9 @@ public class UserService implements  UserDetailsService {
     }
 
     public List<User> getAllUser(){
-        return userRepository.findAll();
+
+
+        return userRepository.findAllUsers();
     }
 
     //update connected user
@@ -85,8 +87,19 @@ public class UserService implements  UserDetailsService {
         user.setFirstname(userRequest.getFirstName());
         user.setLastname(userRequest.getLastName());
         user.setEmail(userRequest.getEmail());
-        user.setPassword(userRequest.getPassword());
-        user.setPhoneNumber(userRequest.getPhoneNumber());
+        user.setRole(UserRole.valueOf(userRequest.getUserRole()));
+
+        return  userRepository.save(user);
+    }
+
+
+    public User updateClient(Long userid,UserRequest userRequest) {
+        User user = userRepository.findById(userid).get();
+        user.setFirstname(userRequest.getFirstName());
+        user.setLastname(userRequest.getLastName());
+        user.setEmail(userRequest.getEmail());
+        user.setRole(UserRole.valueOf(userRequest.getUserRole()));
+
         return  userRepository.save(user);
     }
 
@@ -143,7 +156,7 @@ public class UserService implements  UserDetailsService {
         Optional<Address> optionalAddress = addressRepository.findById(address.getId());
         if (optionalAddress.isPresent()) {
             // Save the updated address
-            addressRepository.deleteById(address.getId());
+            addressRepository.deleteByAddressId(address.getId());
         } else {
 
             throw new RuntimeException("Address with ID " + address.getId() + " not found");

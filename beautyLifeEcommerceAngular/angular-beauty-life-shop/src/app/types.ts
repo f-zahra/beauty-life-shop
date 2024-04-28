@@ -41,36 +41,20 @@ export interface Order {
   items: OrderItem[];
   orderStatus: OrderStatus;
   shippingCost: number;
+  user: User;
 }
 
 export enum OrderStatus {
-  PENDING = 'PENDING',
+  PENDING,
+  SHIPPED,
+  DELIVERED,
+  CANCELED,
 }
-export interface Options {
-  headers?:
-    | HttpHeaders
-    | {
-        [header: string]: string | string[];
-      };
-  observe?: 'body';
-  context?: HttpContext;
-  params?:
-    | HttpParams
-    | {
-        [param: string]:
-          | string
-          | number
-          | boolean
-          | ReadonlyArray<string | number | boolean>;
-      };
-  reportProgress?: boolean;
-  responseType?: 'json';
-  withCredentials?: boolean;
-  transferCache?:
-    | {
-        includeHeaders?: string[];
-      }
-    | boolean;
+export enum UserRole {
+  USER,
+  ADMIN,
+  VISITOR,
+  SALESPERSON,
 }
 
 export interface Address {
@@ -80,6 +64,7 @@ export interface Address {
   state: string;
   postalCode: string;
   country: string;
+  default: boolean;
   user: User;
 }
 
@@ -97,11 +82,32 @@ export interface User {
   firstname: string;
   lastname: string;
   email: string;
-  phoneNumber: number;
+  phoneNumber: string;
+  locked: boolean;
+  role: UserRole;
   addresses: Address[];
+}
+
+export interface UserDto {
+  id: number;
+  username: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phoneNumber: string;
+  locked: boolean;
+  role: string;
 }
 
 export interface AuthenticationRequest {
   username: String;
   password: String;
+}
+export interface RegistrationRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
 }
