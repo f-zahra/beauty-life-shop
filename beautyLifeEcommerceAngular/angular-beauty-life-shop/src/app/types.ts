@@ -35,7 +35,7 @@ export interface ShoppingCart {
 }
 
 export interface Order {
-  orderId: number;
+  orderId?: number;
   orderDate: Date;
   shippingAddress: Address;
   items: OrderItem[];

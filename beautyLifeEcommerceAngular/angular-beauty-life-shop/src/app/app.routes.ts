@@ -12,6 +12,7 @@ import { UserDashboardComponent } from './dashboard/user-dashboard/user-dashboar
 import { SalesPersonDashboardComponent } from './dashboard/sales-person-dashboard/sales-person-dashboard.component';
 import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashboard.component';
 import { HomeComponent } from './home/home.component';
+import { PaymentComponent } from './order/payment/payment.component';
 
 export const routes: Routes = [
   {
