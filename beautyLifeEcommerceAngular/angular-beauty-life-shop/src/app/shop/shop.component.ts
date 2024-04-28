@@ -24,6 +24,7 @@ export class ShopComponent {
   constructor(private productsService: ProductsService) {}
 
   ngOnInit() {
+    debugger;
     this.productsService.getAllProducts().subscribe((products) => {
       this.productList = products;
     });

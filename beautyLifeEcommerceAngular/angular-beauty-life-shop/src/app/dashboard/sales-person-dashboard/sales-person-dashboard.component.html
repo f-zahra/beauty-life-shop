@@ -44,7 +44,7 @@
                 required
               >
                 <option
-                  *ngFor="let address of Order.user.addresses"
+                  *ngFor="let address of Order.user?.addresses"
                   [ngValue]="address"
                 >
                   {{ address.street }}, {{ address.city }}
@@ -56,10 +56,10 @@
           <div id="user-info">
             <h3>Client info:</h3>
             <!-- Read-only user information -->
-            <p>{{ Order.user.firstname }}</p>
-            <p>{{ Order.user.lastname }}</p>
-            <p>{{ Order.user.email }}</p>
-            <p>{{ Order.user.phoneNumber }}</p>
+            <p>{{ Order.user?.firstname }}</p>
+            <p>{{ Order.user?.lastname }}</p>
+            <p>{{ Order.user?.email }}</p>
+            <p>{{ Order.user?.phoneNumber }}</p>
           </div>
 
           <div class="modal-footer">

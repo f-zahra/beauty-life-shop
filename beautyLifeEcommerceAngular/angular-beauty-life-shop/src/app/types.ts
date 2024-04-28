@@ -35,13 +35,13 @@ export interface ShoppingCart {
 }
 
 export interface Order {
-  orderId?: number;
+  orderId: number;
   orderDate: Date;
   shippingAddress: Address;
   items: OrderItem[];
   orderStatus: OrderStatus;
   shippingCost: number;
-  user: User;
+  user?: User;
 }
 
 export enum OrderStatus {

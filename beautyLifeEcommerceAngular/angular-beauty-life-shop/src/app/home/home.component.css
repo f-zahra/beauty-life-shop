@@ -1,0 +1,22 @@
+.about {
+  text-align: center;
+  margin: 10%;
+}
+
+.container {
+  position: relative;
+
+  height: 700px;
+}
+.image {
+  height: 700px;
+  background-image: url("../../assets/img/connect-image-45-1400x480@2x.png"); /* Maintain aspect ratio */
+  opacity: 0.5;
+}
+
+.intro {
+  position: absolute; /* Position button absolutely */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for the center position */
+}

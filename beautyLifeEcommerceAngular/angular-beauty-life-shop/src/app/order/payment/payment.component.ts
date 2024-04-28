@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ShoppingCart, Address, Order } from '../../types';
+import { ShoppingCart, Address, Order, OrderStatus } from '../../types';
 import { OrderService } from '../../services/order.service';
 
 @Component({
@@ -52,8 +52,13 @@ export class PaymentComponent implements OnInit {
       //set order fields
 
       this.userOrder = {
-        orderDate: order.create_time,
+        orderId: 0, // Placeholder if auto-generated
+        orderDate: new Date(order.create_time),
         shippingAddress: this.shippingAddress,
+        items: [], // Add order items if needed
+        orderStatus: OrderStatus.PENDING, // Default order status
+        shippingCost: 0, // Set shipping cost if needed
+        // User information
       };
       this.orderService.placeOrder(this.userOrder).subscribe(
         () => {
