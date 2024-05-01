@@ -153,15 +153,8 @@ public class UserService implements  UserDetailsService {
     //delete address
     public void deleteAddress(Address address) throws ExceptionHandler{
 
-        Optional<Address> optionalAddress = addressRepository.findById(address.getId());
-        if (optionalAddress.isPresent()) {
-            // Save the updated address
-            addressRepository.deleteByAddressId(address.getId());
-        } else {
-
-            throw new RuntimeException("Address with ID " + address.getId() + " not found");
-        }
-
+        address.setUser(null);
+            addressRepository.save(address);
     }
 
 

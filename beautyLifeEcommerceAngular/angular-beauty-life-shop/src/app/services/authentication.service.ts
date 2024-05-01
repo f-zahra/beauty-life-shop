@@ -3,14 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationRequest, RegistrationRequest } from '../types';
 
-function isBrowser(): boolean {
-  return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
-}
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   private apiUrl = 'http://localhost:8080';
+  private token: any = '';
 
   constructor(private http: HttpClient) {}
 
@@ -19,11 +17,13 @@ export class AuthenticationService {
     localStorage.setItem('token', token);
   }
 
-  getAuthToken(): string {
-    if (isBrowser()) {
-      localStorage.getItem('token');
+  getAuthToken(): string | null {
+    debugger;
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('token');
+    } else {
+      return '';
     }
-    return '';
   }
 
   isAuthenticated(): boolean {
@@ -31,9 +31,6 @@ export class AuthenticationService {
     else return false;
   }
 
-  isBrowser(): boolean {
-    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
-  }
   authenticate(auth: AuthenticationRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/api/login`, auth, {
       responseType: 'text',

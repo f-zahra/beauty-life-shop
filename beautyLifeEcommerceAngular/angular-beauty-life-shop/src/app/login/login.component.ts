@@ -50,9 +50,7 @@ export class LoginComponent {
         this.auth.setAuthToken(res);
         console.log(res);
 
-        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-        console.log(returnUrl);
-        this.router.navigateByUrl(returnUrl);
+        this.router.navigate(['/user-dashboard']);
       },
       error: (err): void => {
         console.log(err);

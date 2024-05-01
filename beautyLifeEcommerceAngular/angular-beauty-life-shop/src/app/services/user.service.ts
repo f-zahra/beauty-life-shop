@@ -8,8 +8,8 @@ import { response } from 'express';
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl_user = 'http://localhost:8080/api/user/';
-  private apiUrl_admin = 'http://localhost:8080/api/admin/';
+  private apiUrl_user = 'http://localhost:8080/api/user';
+  private apiUrl_admin = 'http://localhost:8080/api/admin';
   constructor(private http: HttpClient) {}
 
   getUser(): Observable<User> {

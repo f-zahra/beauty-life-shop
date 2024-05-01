@@ -41,28 +41,7 @@ public class LoginController {
 
     @Autowired
     private TokenService tokenService;
-   /* @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUsername(),
-                            loginRequest.getPassword()
-                    )
-            );
 
-            UserDetails userDetails = userService.loadUserByUsername(loginRequest.getUsername());
-            if (userDetails == null) {
-                throw new UsernameNotFoundException("User not found");
-            }
-
-            // Proceed with further logic
-            return ResponseEntity.ok("Success");
-        } catch (AuthenticationException e) {
-            return ResponseEntity.status(401).body("Unauthorized");
-        }
-    }
-*/
 
     @PostMapping("/api/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
