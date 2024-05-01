@@ -1,0 +1,141 @@
+<!-- start modal -->
+<!-- Modal with a form -->
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <!-- Add a submit handler to the form -->
+        <form
+          class="modal-form d-flex flex-column"
+          (ngSubmit)="onSubmit()"
+          *ngIf="Order"
+        >
+          <div id="order-info">
+            <h3>Order info:</h3>
+
+            <!-- Order status with unique name and correct ngModel binding -->
+            <label for="status">Order status: </label>
+            <select
+              name="orderStatus"
+              id="orderStatus"
+              [(ngModel)]="Order.orderStatus"
+              required
+            >
+              <option value="PENDING">PENDING</option>
+              <option value="CANCELED">CANCELED</option>
+              <option value="SHIPPED">SHIPPED</option>
+              <option value="DELIVERED">DELIVERED</option>
+            </select>
+
+            <!-- Shipping address -->
+            <label>Shipping Address: </label>
+            <div class="d-flex flex-row user-address wrap gap-2">
+              <select
+                name="shippingAddress"
+                id="shippingAddress"
+                [(ngModel)]="Order.shippingAddress"
+                required
+              >
+                <option
+                  *ngFor="let address of Order.user?.addresses"
+                  [ngValue]="address"
+                >
+                  {{ address.street }}, {{ address.city }}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div id="user-info">
+            <h3>Client info:</h3>
+            <!-- Read-only user information -->
+            <p>{{ Order.user?.firstname }}</p>
+            <p>{{ Order.user?.lastname }}</p>
+            <p>{{ Order.user?.email }}</p>
+            <p>{{ Order.user?.phoneNumber }}</p>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Confirm
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal with a form -->
+
+<!-- end modal -->
+
+<div class="d-flex gap-3">
+  <div>
+    <ul class="nav nav-tabs flex-column">
+      <li class="nav-item">
+        <a class="nav-link" (click)="openTab('ClientOrder')">Client Orders</a>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="activeTab === 'ClientOrder'">
+    <!-- order history -->
+    <h3><strong>Client Orders</strong></h3>
+    <div>{{ actionMessage }}</div>
+    <input [(ngModel)]="searchText" placeholder="Search orders..." />
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="row">Date</th>
+          <th scope="row">status</th>
+          <th scope="row">shipping address</th>
+          <th scope="row">action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let order of orderInfo | searchFilter : searchText;
+            let i = index
+          "
+        >
+          <th scope="row">{{ i + 1 }}</th>
+
+          <td>{{ order.orderDate | date : "yyyy-MM-dd" }}</td>
+          <td>{{ order.orderStatus }}</td>
+          <td>
+            <span>{{ order.shippingAddress.street }},</span>
+            <span>{{ order.shippingAddress.city }},</span>
+            <span>{{ order.shippingAddress.country }},</span>
+            <span>{{ order.shippingAddress.postalCode }}</span>
+          </td>
+          <td class="d-flex gap-3">
+            <button
+              type="button"
+              name="cancelOrder"
+              class="p-1"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModalCenter"
+              (click)="getOrder(order)"
+            >
+              update order
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

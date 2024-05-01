@@ -1,0 +1,121 @@
+<!-- Modal with a form -->
+<div
+  class="modal fade"
+  id="userModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+          <div>
+            <label>Email</label>
+            <input type="text" formControlName="email" required />
+          </div>
+          <div>
+            <label>First Name</label>
+            <input type="text" formControlName="firstname" required />
+          </div>
+          <div>
+            <label>Last Name</label>
+            <input type="text" formControlName="lastname" required />
+          </div>
+          <div>
+            <label>Role</label>
+            <select formControlName="role" required>
+              <option value="USER">User</option>
+              <option value="SALESPERSON">Salesperson</option>
+              <option value="ADMIN">Admin</option>
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal with the form -->
+
+<div class="d-flex gap-3">
+  <div>
+    <ul class="nav nav-tabs flex-column">
+      <li class="nav-item">
+        <a class="nav-link" (click)="openTab('clients')">Clients</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="openTab('order')">Orders</a>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="activeTab === 'clients'">
+    <table class="table" #table>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="row">email</th>
+          <th scope="row">firstname</th>
+          <th scope="row">lastname</th>
+          <th scope="row">locked</th>
+
+          <th scope="row">phone number</th>
+          <th scope="row">role</th>
+          <th scope="row">action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+
+          <td>{{ client.email }}</td>
+          <td>{{ client.firstname }}</td>
+          <td>{{ client.lastname }}</td>
+          <td>{{ client.locked }}</td>
+          <td>{{ client.phoneNumber }}</td>
+          <td>{{ client.role }}</td>
+
+          <td class="d-flex gap-3">
+            <button
+              type="button"
+              name="update"
+              class="p-1"
+              data-bs-toggle="modal"
+              data-bs-target="#userModal"
+              (click)="selectClient(client)"
+            >
+              update
+            </button>
+
+            <button
+              type="button"
+              name="cancelOrder"
+              class="p-1"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModalCenter"
+            >
+              delete
+            </button>
+            <button
+              type="button"
+              name="cancelOrder"
+              class="p-1"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModalCenter"
+            >
+              lock
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="activeTab === 'order'">
+    <p>tables 2</p>
+  </div>
+</div>

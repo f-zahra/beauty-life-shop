@@ -1,27 +1,94 @@
-<div class="login-container">
-  <h2>Login</h2>
-  <form id="login-form" action="#" method="post">
-    <div>
-      <label for="username">Username:</label><br />
-      <input
-        [(ngModel)]="authRequest.username"
-        type="text"
-        id="username"
-        name="username"
-        required
-      />
+<div class="parent">
+  <div
+    class="container"
+    [ngClass]="isSignDivVisiable ? 'active' : ''"
+    id="container"
+  >
+    <div class="form-container sign-up" *ngIf="isSignDivVisiable">
+      <form (ngSubmit)="onRegister()">
+        <h1>Create Account</h1>
+
+        <input
+          type="text"
+          name="firstname"
+          [(ngModel)]="signUpObj.firstName"
+          placeholder="firstname"
+        />
+        <input
+          type="text"
+          name="lastname"
+          [(ngModel)]="signUpObj.lastName"
+          placeholder="lastname"
+        />
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="signUpObj.email"
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="signUpObj.password"
+          placeholder="Password"
+        />
+        <input
+          type="text"
+          name="phoneNumber"
+          [(ngModel)]="signUpObj.phoneNumber"
+          placeholder="phone number"
+        />
+        <button type="submit">Sign Up</button>
+      </form>
     </div>
-    <div>
-      <label for="password">Password:</label><br />
-      <input
-        [(ngModel)]="authRequest.password"
-        type="password"
-        id="password"
-        name="password"
-        required
-      />
+    <div class="form-container sign-in" *ngIf="!isSignDivVisiable">
+      <form (ngSubmit)="login()">
+        <h1>Sign In</h1>
+
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="authRequest.username"
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="authRequest.password"
+          placeholder="Password"
+        />
+
+        <button type="submit" (ngSubmit)="login()">Sign In</button>
+      </form>
     </div>
-    <button (click)="login()" type="submit">Login</button>
-  </form>
-  <div class="error-message" id="error-message"></div>
+    <div class="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <h1>Welcome Back!</h1>
+          <p>Enter your personal details to use all site features</p>
+          <button
+            type="button"
+            class="hidden"
+            id="login"
+            (click)="isSignDivVisiable = false"
+            type="submit"
+          >
+            Sign In
+          </button>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h1>Hello, Friend!</h1>
+          <p>Register with your personal details to use all site features</p>
+          <button
+            type="button"
+            class="hidden"
+            id="register"
+            (click)="isSignDivVisiable = true"
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

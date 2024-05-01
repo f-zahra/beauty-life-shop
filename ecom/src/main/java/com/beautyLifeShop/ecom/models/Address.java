@@ -9,7 +9,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-
 public class Address {
 
     @Id
@@ -19,8 +18,10 @@ public class Address {
     private String street;
     private String city;
     private String state;
+    @Column(unique = true, length=6)
     private String postalCode;
     private String country;
+    private boolean isDefault= true;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

@@ -15,7 +15,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-
 public class Order {
 
     @Id
@@ -23,13 +22,16 @@ public class Order {
     @SequenceGenerator(name = "user_order", sequenceName = "user_order_seq", allocationSize = 1)
     private Long orderId;
     private Date orderDate;
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "shipping_address_id")
     private Address shippingAddress;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     List<OrderItem> items = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus = OrderStatus.PENDING;
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
 

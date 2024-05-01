@@ -11,17 +11,18 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface UserRepository  extends JpaRepository<User, Long> {
 
+
     Optional<User> findByEmail(String email);//optional in case the return is null
 
-
-    Optional<User> findById(Long id);
-
+     Optional<User> findById(Long id);
 
 
-
+    @Query("SELECT u FROM User u WHERE u.role = 'USER' OR u.role = 'SALESPERSON'")
+    List<User> findAllUsers();
 }
